@@ -1,0 +1,22 @@
+p {
+    overflow-wrap: break-word;
+
+}
+
+iframe {
+    max-width: 100%;
+    width: 100%;
+    ;
+    height: auto;
+}
+
+@media(min-width:1024px) {
+    #sidebar {
+        width: 15%;
+    }
+
+    #wrapper {
+        width: 79%;
+        margin-left: 25%;
+    }
+}
