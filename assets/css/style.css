@@ -20,3 +20,40 @@ iframe {
         margin-left: 25%;
     }
 }
+
+
+/* Add this CSS to your existing styles or create a new CSS file */
+.education-entry {
+    margin-bottom: 30px;
+}
+
+.education-entry h3 {
+    margin-bottom: 5px;
+}
+
+.date, .cgpa, .percentage {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.fa-graduation-cap, .fa-calendar-alt {
+    margin-left: 5px;
+}
+
+/* Add this CSS to your existing styles or create a new CSS file */
+.work-entry {
+    margin-bottom: 30px;
+}
+
+.work-entry h3 {
+    margin-bottom: 5px;
+}
+
+.date {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.fa-calendar-alt {
+    margin-left: 5px;
+}
