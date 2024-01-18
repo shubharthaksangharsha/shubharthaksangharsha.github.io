@@ -1,8 +1,10 @@
+/*para*/
 p {
     overflow-wrap: break-word;
-
+    
 }
 
+/*video responsiveness*/
 iframe {
     max-width: 100%;
     width: 100%;
@@ -22,7 +24,7 @@ iframe {
 }
 
 
-/* Add this CSS to your existing styles or create a new CSS file */
+/* education */
 .education-entry {
     margin-bottom: 30px;
 }
@@ -40,7 +42,7 @@ iframe {
     margin-left: 5px;
 }
 
-/* Add this CSS to your existing styles or create a new CSS file */
+/* work */
 .work-entry {
     margin-bottom: 30px;
 }
