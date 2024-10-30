@@ -59,3 +59,11 @@ iframe {
 .fa-calendar-alt {
     margin-left: 5px;
 }
+
+elevenlabs-convai {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: block;
+}
