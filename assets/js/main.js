@@ -187,4 +187,39 @@
 				}
 			});
 
+	// Scroll to top functionality
+	const scrollBtn = document.querySelector('.scroll-top-btn');
+	if (scrollBtn) {
+		window.addEventListener('scroll', function() {
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				scrollBtn.style.display = 'block';
+			} else {
+				scrollBtn.style.display = 'none';
+			}
+		});
+
+		scrollBtn.addEventListener('click', function() {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		});
+	}
+
+	// Fade in elements on scroll
+	function handleScrollAnimation() {
+		const elements = document.querySelectorAll('.fade-in');
+		elements.forEach(element => {
+			const elementTop = element.getBoundingClientRect().top;
+			const elementVisible = 150;
+			if (elementTop < window.innerHeight - elementVisible) {
+				element.classList.add('visible');
+			}
+		});
+	}
+
+	// Initialize animations
+	window.addEventListener('scroll', handleScrollAnimation);
+	handleScrollAnimation();
+
 })(jQuery);
