@@ -4,6 +4,108 @@ p {
     
 }
 
+/* Fix for freelance section button alignment */
+.features {
+    align-items: stretch;
+}
+
+.features section {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.features section p {
+    flex-grow: 1;
+}
+
+.features section .actions {
+    margin-top: auto;
+    padding-top: 1em;
+}
+
+/* Fix for freelance section images - Show complete images */
+#freelance .spotlights section .image {
+    width: 50%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    min-height: 300px; /* Minimum height, allows for natural image scaling */
+    background: #f8f9fa; /* Light background for better contrast */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#freelance .spotlights section .image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+#freelance .spotlights section .image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Shows complete image without cropping */
+    object-position: center; /* Centers the image within the container */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+#freelance .spotlights section .image:hover img {
+    transform: scale(1.02);
+}
+
+#freelance .spotlights section .content {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 2em 2em 2em 3em;
+}
+
+#freelance .spotlights section {
+    display: flex;
+    align-items: center;
+    min-height: auto;
+}
+
+@media screen and (max-width: 1280px) {
+    #freelance .spotlights section .image {
+        width: 50%;
+        min-height: 280px; /* Minimum height for medium screens */
+    }
+    
+    #freelance .spotlights section .content {
+        width: 50%;
+        padding: 1.5em 1.5em 1.5em 2em;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #freelance .spotlights section .image {
+        width: 100%;
+        min-height: 250px; /* Minimum height for mobile screens */
+    }
+    
+    #freelance .spotlights section .content {
+        width: 100%;
+        padding: 2em;
+    }
+    
+    #freelance .spotlights section {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #freelance .spotlights section .image {
+        min-height: 200px; /* Minimum height for very small screens */
+    }
+}
+
 /*video responsiveness*/
 iframe {
     max-width: 100%;
@@ -125,3 +227,29 @@ elevenlabs-convai {
 .skill-group:hover {
     transform: translateY(-5px);
 }
+
+/* Show All Projects Button Section */
+.wrapper.style1 .button.primary {
+    background: linear-gradient(135deg, #5e42a6 0%, #b74e91 100%);
+    border: none;
+    color: white;
+    padding: 0.5em 1.2em;
+    font-size: 0.8em;
+    font-weight: 500;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(94, 66, 166, 0.15);
+}
+
+.wrapper.style1 .button.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(94, 66, 166, 0.25);
+    background: linear-gradient(135deg, #6b4bb3 0%, #c25aa0 100%);
+}
+
+.wrapper.style1 .button.primary .fa-code-branch {
+    margin-right: 0.3em;
+    font-size: 0.8em;
+}
+
+
