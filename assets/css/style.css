@@ -68,49 +68,74 @@ p {
     display: flex;
     align-items: center;
     min-height: auto;
+    overflow: visible; /* Allow images to display fully */
 }
 
+/* Ensure the freelance wrapper doesn't crop content */
+#freelance.wrapper {
+    overflow: visible;
+}
+
+#freelance .spotlights {
+    overflow: visible;
+}
+
+/* Large tablets and small desktops */
 @media screen and (max-width: 1280px) {
     #freelance .spotlights section .image {
-        width: 55%; /* Increased for better visibility */
+        width: 55%;
     }
     
     #freelance .spotlights section .content {
-        width: 45%; /* Adjusted to match image width */
+        width: 45%;
         padding: 1.5em 1.5em 1.5em 2em;
     }
 }
 
-@media screen and (max-width: 980px) {
+/* Tablets in landscape mode */
+@media screen and (max-width: 1024px) {
     #freelance .spotlights section .image {
-        width: 110%; /* Expand beyond container for better visibility */
-        max-width: 110%;
+        width: 58%;
+    }
+    
+    #freelance .spotlights section .content {
+        width: 42%;
+        padding: 1.5em;
+    }
+}
+
+/* Tablets in portrait and large phones in landscape */
+@media screen and (max-width: 980px) {
+    #freelance .spotlights section {
+        flex-direction: column;
+        overflow: visible;
+    }
+    
+    #freelance .spotlights section .image {
+        width: 100%;
+        max-width: 100%;
         padding: 0;
-        margin: 0 -5%; /* Negative margin to expand outward */
+        margin: 0;
         box-sizing: border-box;
     }
     
     #freelance .spotlights section .image img {
         width: 100%;
         max-width: 100%;
-        margin: 0 auto; /* Center the image */
+        margin: 0 auto;
     }
     
     #freelance .spotlights section .content {
         width: 100%;
         padding: 2em 1.5em;
     }
-    
-    #freelance .spotlights section {
-        flex-direction: column;
-        overflow: visible; /* Allow image to expand */
-    }
 }
 
+/* Standard phones in landscape and large phones in portrait */
 @media screen and (max-width: 736px) {
     #freelance .spotlights section .image {
-        width: 115%; /* Even more expansion for very small screens */
-        margin: 0 -7.5%; /* Larger negative margin */
+        width: 100%;
+        margin: 0;
     }
     
     #freelance .spotlights section .image img {
@@ -118,7 +143,42 @@ p {
     }
     
     #freelance .spotlights section .content {
-        padding: 2em 1em;
+        padding: 1.5em 1em;
+    }
+}
+
+/* Standard phones in portrait */
+@media screen and (max-width: 480px) {
+    #freelance .spotlights section .image {
+        width: 100%;
+        margin: 0;
+    }
+    
+    #freelance .spotlights section .image img {
+        width: 100%;
+    }
+    
+    #freelance .spotlights section .content {
+        padding: 1.5em 0.75em;
+    }
+}
+
+/* Small phones */
+@media screen and (max-width: 360px) {
+    #freelance .spotlights section .image {
+        width: 100%;
+    }
+    
+    #freelance .spotlights section .image img {
+        width: 100%;
+    }
+    
+    #freelance .spotlights section .content {
+        padding: 1.25em 0.5em;
+    }
+    
+    #freelance .spotlights section .content .inner h2 {
+        font-size: 1.5em;
     }
 }
 
