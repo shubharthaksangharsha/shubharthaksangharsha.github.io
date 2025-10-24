@@ -234,30 +234,103 @@
     
     // Start Apsara rotation (special timeline mode)
     function startApsaraRotation() {
-        setInterval(() => {
-            const apsaraCards = document.querySelectorAll('.apsara-card');
-            if (apsaraCards.length > 1) {
-                // Hide all Apsara cards
-                apsaraCards.forEach(card => {
-                    card.style.display = 'none';
-                });
-                
-                // Show current Apsara
-                if (apsaraCards[currentApsaraIndex]) {
-                    apsaraCards[currentApsaraIndex].style.display = 'flex';
-                }
-                
-                // Move to next Apsara
-                currentApsaraIndex = (currentApsaraIndex + 1) % apsaraCards.length;
-            }
-        }, 2000); // Change every 2 seconds
+        const apsaraCards = document.querySelectorAll('.apsara-card');
+        if (apsaraCards.length <= 1) return;
         
-        // Initial display - show first Apsara only
-        setTimeout(() => {
-            const apsaraCards = document.querySelectorAll('.apsara-card');
-            apsaraCards.forEach((card, index) => {
-                card.style.display = index === 0 ? 'flex' : 'none';
+        // Add navigation controls to first Apsara card only
+        const navContainer = document.createElement('div');
+        navContainer.className = 'apsara-navigation';
+        
+        // Previous button
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'apsara-nav-btn';
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.onclick = () => changeApsara('prev');
+        
+        // Dots container
+        const dotsContainer = document.createElement('div');
+        dotsContainer.className = 'apsara-dots';
+        
+        // Create dots
+        for (let i = 0; i < apsaraCards.length; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'apsara-dot';
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => changeApsara(i);
+            dotsContainer.appendChild(dot);
+        }
+        
+        // Next button
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'apsara-nav-btn';
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.onclick = () => changeApsara('next');
+        
+        navContainer.appendChild(prevBtn);
+        navContainer.appendChild(dotsContainer);
+        navContainer.appendChild(nextBtn);
+        
+        // Add navigation to each Apsara card
+        apsaraCards.forEach(card => {
+            const nav = navContainer.cloneNode(true);
+            
+            // Re-attach event listeners for cloned elements
+            const clonedPrevBtn = nav.querySelector('.apsara-nav-btn:first-child');
+            const clonedNextBtn = nav.querySelector('.apsara-nav-btn:last-child');
+            const clonedDots = nav.querySelectorAll('.apsara-dot');
+            
+            clonedPrevBtn.onclick = () => changeApsara('prev');
+            clonedNextBtn.onclick = () => changeApsara('next');
+            clonedDots.forEach((dot, i) => {
+                dot.onclick = () => changeApsara(i);
             });
+            
+            card.appendChild(nav);
+        });
+        
+        // Function to change Apsara display
+        function changeApsara(direction) {
+            if (typeof direction === 'number') {
+                currentApsaraIndex = direction;
+            } else if (direction === 'next') {
+                currentApsaraIndex = (currentApsaraIndex + 1) % apsaraCards.length;
+            } else if (direction === 'prev') {
+                currentApsaraIndex = (currentApsaraIndex - 1 + apsaraCards.length) % apsaraCards.length;
+            }
+            
+            updateApsaraDisplay();
+        }
+        
+        function updateApsaraDisplay() {
+            // Hide all Apsara cards
+            apsaraCards.forEach(card => {
+                card.style.display = 'none';
+            });
+            
+            // Show current Apsara
+            if (apsaraCards[currentApsaraIndex]) {
+                apsaraCards[currentApsaraIndex].style.display = 'flex';
+            }
+            
+            // Update all dots
+            document.querySelectorAll('.apsara-dot').forEach((dot, index) => {
+                if (index % apsaraCards.length === currentApsaraIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // Auto-rotation
+        setInterval(() => {
+            currentApsaraIndex = (currentApsaraIndex + 1) % apsaraCards.length;
+            updateApsaraDisplay();
+        }, 3000); // Change every 3 seconds (increased from 2 for better UX)
+        
+        // Initial display
+        setTimeout(() => {
+            updateApsaraDisplay();
         }, 100);
     }
 
