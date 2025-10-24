@@ -24,19 +24,21 @@ p {
     padding-top: 1em;
 }
 
-/* Fix for freelance section images - Proper layout without cropping */
+/* Freelance section - Fixed aspect ratio for consistent image display */
 #freelance .spotlights section .image {
-    width: 55%; /* Increased from 50% to 55% for better visibility */
-    overflow: visible; /* Changed from hidden to visible to show full image */
+    width: 50%;
+    position: relative;
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Remove any default padding */
+    background: #1a1a2e;
+}
+
+/* Maintain 16:10 aspect ratio for website screenshots */
+#freelance .spotlights section .image::before {
+    content: "";
+    display: block;
+    padding-top: 62.5%; /* 10/16 = 0.625 = 62.5% for 16:10 aspect ratio */
 }
 
 #freelance .spotlights section .image:hover {
@@ -45,140 +47,42 @@ p {
 }
 
 #freelance .spotlights section .image img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: none; /* Remove max-width constraint */
-    height: auto;
-    display: block;
-    border-radius: 8px; /* Add border radius to image itself */
-    transition: transform 0.3s ease;
-}
-
-#freelance .spotlights section .image:hover img {
-    transform: scale(1.02);
+    height: 100%;
+    object-fit: contain; /* Show full image without cropping */
+    object-position: center;
+    border-radius: 8px;
 }
 
 #freelance .spotlights section .content {
-    width: 45%; /* Reduced from 50% to 45% to give more space to images */
+    width: 50%;
     display: flex;
     align-items: center;
-    padding: 2em 2em 2em 2.5em;
+    padding: 2em 2em 2em 3em;
 }
 
 #freelance .spotlights section {
     display: flex;
     align-items: center;
     min-height: auto;
-    overflow: visible; /* Allow images to display fully */
 }
 
-/* Ensure the freelance wrapper doesn't crop content */
-#freelance.wrapper {
-    overflow: visible;
-}
-
-#freelance .spotlights {
-    overflow: visible;
-}
-
-/* Large tablets and small desktops */
-@media screen and (max-width: 1280px) {
-    #freelance .spotlights section .image {
-        width: 55%;
-    }
-    
-    #freelance .spotlights section .content {
-        width: 45%;
-        padding: 1.5em 1.5em 1.5em 2em;
-    }
-}
-
-/* Tablets in landscape mode */
-@media screen and (max-width: 1024px) {
-    #freelance .spotlights section .image {
-        width: 58%;
-    }
-    
-    #freelance .spotlights section .content {
-        width: 42%;
-        padding: 1.5em;
-    }
-}
-
-/* Tablets in portrait and large phones in landscape */
+/* Tablet and mobile view */
 @media screen and (max-width: 980px) {
     #freelance .spotlights section {
         flex-direction: column;
-        overflow: visible;
     }
     
     #freelance .spotlights section .image {
         width: 100%;
-        max-width: 100%;
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
-    
-    #freelance .spotlights section .image img {
-        width: 100%;
-        max-width: 100%;
-        margin: 0 auto;
     }
     
     #freelance .spotlights section .content {
         width: 100%;
-        padding: 2em 1.5em;
-    }
-}
-
-/* Standard phones in landscape and large phones in portrait */
-@media screen and (max-width: 736px) {
-    #freelance .spotlights section .image {
-        width: 100%;
-        margin: 0;
-    }
-    
-    #freelance .spotlights section .image img {
-        width: 100%;
-    }
-    
-    #freelance .spotlights section .content {
-        padding: 1.5em 1em;
-    }
-}
-
-/* Standard phones in portrait */
-@media screen and (max-width: 480px) {
-    #freelance .spotlights section .image {
-        width: 100%;
-        margin: 0;
-    }
-    
-    #freelance .spotlights section .image img {
-        width: 100%;
-    }
-    
-    #freelance .spotlights section .content {
-        padding: 1.5em 0.75em;
-    }
-}
-
-/* Small phones */
-@media screen and (max-width: 360px) {
-    #freelance .spotlights section .image {
-        width: 100%;
-    }
-    
-    #freelance .spotlights section .image img {
-        width: 100%;
-    }
-    
-    #freelance .spotlights section .content {
-        padding: 1.25em 0.5em;
-    }
-    
-    #freelance .spotlights section .content .inner h2 {
-        font-size: 1.5em;
+        padding: 2em;
     }
 }
 
