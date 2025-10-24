@@ -31,7 +31,7 @@ p {
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background: #1a1a2e;
+    overflow: hidden;
 }
 
 /* Maintain 16:10 aspect ratio for website screenshots */
@@ -52,8 +52,8 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Show full image without cropping */
-    object-position: center;
+    object-fit: cover; /* Fill the container, may crop edges slightly */
+    object-position: center top; /* Align to top to show navigation bars */
     border-radius: 8px;
 }
 
