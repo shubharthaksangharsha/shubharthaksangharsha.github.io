@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>All Projects - Shubh Arthak Sangharsha</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/projects-page.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+    <!-- Sidebar -->
+    <section id="sidebar">
+        <div class="inner">
+            <nav>
+                <ul>
+                    <li><a href="index.html#intro">Welcome</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
+                    <li><a href="index.html#freelance">Freelance Work</a></li>
+                    <li><a href="index.html#skills">Skills</a></li>
+                    <li><a href="index.html#work">Work Experience</a></li>
+                    <li><a href="index.html#education">Education</a></li>
+                    <li><a href="index.html#contact">Get in touch</a></li>
+                    <li><a href="projects.html" class="active">All Projects</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <section id="all-projects" class="wrapper style1 fade-up">
+            <div class="inner">
+                <h1>All Projects</h1>
+                <p>Explore all my public repositories from GitHub. These projects showcase my development work across various technologies and domains.</p>
+
+                <!-- Search and Filter Controls -->
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search projects..." />
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="filter-controls">
+                        <select id="language-filter">
+                            <option value="all">All Languages</option>
+                        </select>
+                        <select id="sort-filter">
+                            <option value="updated">Recently Updated</option>
+                            <option value="stars">Most Stars</option>
+                            <option value="name">Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading" class="loading-container">
+                    <div class="loader"></div>
+                    <p>Loading projects and READMEs from GitHub...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="error" class="error-container" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Failed to load projects. Please try again later.</p>
+                </div>
+
+                <!-- Projects Grid -->
+                <div id="projects-grid" class="projects-grid" style="display: none;">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="pagination-container" style="display: none;">
+                    <button id="prev-btn" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div id="page-numbers" class="page-numbers">
+                        <!-- Page numbers will be inserted here -->
+                    </div>
+                    <button id="next-btn" class="pagination-btn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="wrapper style1-alt">
+        <div class="inner">
+            <ul class="menu">
+                <li>&copy; Shubh Arthak Sangharsha. All rights reserved.</li>
+                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/projects-page.js"></script>
+
+</body>
+</html>
+
