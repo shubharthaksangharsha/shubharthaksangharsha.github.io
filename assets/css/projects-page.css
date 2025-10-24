@@ -130,8 +130,8 @@
     display: flex;
     flex-direction: column;
     flex: 1 1 calc(33.333% - 1.5em);
-    min-width: 280px;
-    max-width: 400px;
+    min-width: 300px;
+    max-width: 450px;
 }
 
 /* Special styling for Apsara cards */
@@ -166,23 +166,22 @@
 }
 
 .apsara-nav-btn {
-    background: rgba(255, 255, 255, 0.2);
+    background: transparent;
     border: none;
     color: #ffffff;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8em;
+    font-size: 1.2em;
 }
 
 .apsara-nav-btn:hover {
-    background: #5052b5;
-    transform: scale(1.1);
+    color: #5052b5;
+    transform: scale(1.2);
 }
 
 .apsara-nav-btn:disabled {
@@ -244,9 +243,11 @@
 
 .project-title h3 {
     margin: 0 0 0.3em 0;
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: #ffffff;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.3;
 }
 
 .project-title h3 a {
