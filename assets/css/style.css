@@ -24,19 +24,19 @@ p {
     padding-top: 1em;
 }
 
-/* Fix for freelance section images - Show complete images */
+/* Fix for freelance section images - Proper layout without cropping */
 #freelance .spotlights section .image {
-    width: 50%;
-    overflow: hidden;
+    width: 55%; /* Increased from 50% to 55% for better visibility */
+    overflow: visible; /* Changed from hidden to visible to show full image */
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    min-height: 300px; /* Minimum height, allows for natural image scaling */
-    background: #f8f9fa; /* Light background for better contrast */
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0; /* Remove any default padding */
 }
 
 #freelance .spotlights section .image:hover {
@@ -45,13 +45,11 @@ p {
 }
 
 #freelance .spotlights section .image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
+    max-width: none; /* Remove max-width constraint */
     height: auto;
-    object-fit: contain; /* Shows complete image without cropping */
-    object-position: center; /* Centers the image within the container */
     display: block;
+    border-radius: 8px; /* Add border radius to image itself */
     transition: transform 0.3s ease;
 }
 
@@ -60,10 +58,10 @@ p {
 }
 
 #freelance .spotlights section .content {
-    width: 50%;
+    width: 45%; /* Reduced from 50% to 45% to give more space to images */
     display: flex;
     align-items: center;
-    padding: 2em 2em 2em 3em;
+    padding: 2em 2em 2em 2.5em;
 }
 
 #freelance .spotlights section {
@@ -74,43 +72,60 @@ p {
 
 @media screen and (max-width: 1280px) {
     #freelance .spotlights section .image {
-        width: 50%;
-        min-height: 280px; /* Minimum height for medium screens */
+        width: 55%; /* Increased for better visibility */
     }
     
     #freelance .spotlights section .content {
-        width: 50%;
+        width: 45%; /* Adjusted to match image width */
         padding: 1.5em 1.5em 1.5em 2em;
     }
 }
 
 @media screen and (max-width: 980px) {
     #freelance .spotlights section .image {
+        width: 110%; /* Expand beyond container for better visibility */
+        max-width: 110%;
+        padding: 0;
+        margin: 0 -5%; /* Negative margin to expand outward */
+        box-sizing: border-box;
+    }
+    
+    #freelance .spotlights section .image img {
         width: 100%;
-        min-height: 250px; /* Minimum height for mobile screens */
+        max-width: 100%;
+        margin: 0 auto; /* Center the image */
     }
     
     #freelance .spotlights section .content {
         width: 100%;
-        padding: 2em;
+        padding: 2em 1.5em;
     }
     
     #freelance .spotlights section {
         flex-direction: column;
+        overflow: visible; /* Allow image to expand */
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 736px) {
     #freelance .spotlights section .image {
-        min-height: 200px; /* Minimum height for very small screens */
+        width: 115%; /* Even more expansion for very small screens */
+        margin: 0 -7.5%; /* Larger negative margin */
+    }
+    
+    #freelance .spotlights section .image img {
+        width: 100%;
+    }
+    
+    #freelance .spotlights section .content {
+        padding: 2em 1em;
     }
 }
 
-/*video responsiveness*/
-iframe {
+/*video responsiveness - Only apply to project section videos */
+#projects iframe {
     max-width: 100%;
     width: 100%;
-    ;
     height: auto;
 }
 
