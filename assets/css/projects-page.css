@@ -327,18 +327,23 @@
 }
 
 .project-link {
-    color: #5052b5;
+    color: #ffffff;
     text-decoration: none;
     padding: 0.5em 1em;
-    border: 1px solid #5052b5;
+    border: 2px solid #5052b5;
+    background: rgba(80, 82, 181, 0.3);
     border-radius: 6px;
     transition: all 0.3s ease;
     font-size: 0.9em;
+    font-weight: 500;
 }
 
 .project-link:hover {
     background: #5052b5;
     color: #ffffff;
+    border-color: #6b6dd6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(80, 82, 181, 0.4);
 }
 
 /* Pagination */
