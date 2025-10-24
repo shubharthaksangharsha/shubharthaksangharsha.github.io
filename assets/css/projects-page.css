@@ -141,7 +141,7 @@
     box-shadow: 0 0 20px rgba(80, 82, 181, 0.3);
     animation: apsaraGlow 2s ease-in-out infinite;
     position: relative;
-    padding-bottom: 3.5em;
+    padding-bottom: 3em;
 }
 
 @keyframes apsaraGlow {
@@ -156,11 +156,11 @@
 /* Apsara Navigation Dots */
 .apsara-navigation {
     position: absolute;
-    bottom: 1em;
+    bottom: 0.8em;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 0.5em;
+    gap: 0.3em;
     align-items: center;
     z-index: 10;
 }
@@ -168,24 +168,25 @@
 .apsara-nav-btn {
     background: transparent;
     border: none;
-    color: #ffffff;
-    width: 30px;
-    height: 30px;
+    color: rgba(255, 255, 255, 0.6);
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2em;
+    font-size: 0.9em;
+    padding: 0;
 }
 
 .apsara-nav-btn:hover {
     color: #5052b5;
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 .apsara-nav-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.2;
     cursor: not-allowed;
 }
 

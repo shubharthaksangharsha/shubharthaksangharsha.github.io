@@ -12,7 +12,7 @@
         { name: 'apsara2.5', desc: 'Latest Apsara voice assistant with web interface', link: 'https://apsara.devshubh.me' },
         { name: 'apsara2.0', desc: 'Enhanced version of Apsara voice assistant' },
         { name: 'apsaraAI', desc: 'AI-powered voice assistant with multiple integrations' },
-        { name: 'power_extension', desc: 'Browser extension for power user features' },
+        { name: 'power_extension', desc: 'Gemini Clipboard Assistant - Chrome/Edge extension that sends clipboard content or screenshots to Google\'s Gemini API with keyboard shortcuts' },
         { name: 'ai-website-generator', desc: 'AI-powered website generation tool' },
         { name: 'add2calendar', desc: 'Calendar integration application' },
         { name: 'AmericanSIgnLanguage', desc: 'American Sign Language recognition system' },
