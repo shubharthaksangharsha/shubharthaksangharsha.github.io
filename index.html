@@ -505,10 +505,53 @@
 
     </div>
 
-    <!-- ElevenLabs Convai Widget -->
-    <div id="convai-widget-container">
-        <elevenlabs-convai agent-id="agHJ9J8aPlNY5UTSyMwH"></elevenlabs-convai><script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <!-- Apsara Voice Assistant Widget -->
+    <link rel="stylesheet" href="apsara-live/frontend/widget.css" />
+    <div class="apsara-widget" id="apsaraWidget">
+        <!-- Compact Widget Panel - Always visible, changes state -->
+        <div class="widget-panel active" id="widgetPanel">
+            <!-- Visualizer (small, on left) -->
+            <div class="visualizer-container">
+                <canvas id="miniVisualizer" width="45" height="45"></canvas>
+                <div class="visualizer-orb" id="miniOrb">
+                    <div class="orb-inner"></div>
+                </div>
+            </div>
+
+            <!-- Text and Buttons -->
+            <div class="widget-content">
+                <div class="widget-text" id="widgetText">Talk to Apsara</div>
+                
+                <!-- Mute/Unmute Button -->
+                <button class="mute-button" id="muteButton" style="display: none;" title="Mute microphone">
+                    <svg class="mic-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                    <svg class="mic-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                        <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
+                        <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                </button>
+                
+                <!-- End Button -->
+                <button class="end-button" id="endButton" style="display: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span>End</span>
+                </button>
+            </div>
+        </div>
     </div>
+    <script src="apsara-live/frontend/widget.js"></script>
+
     <button id="scroll-top" class="scroll-top-btn">
         <i class="fas fa-arrow-up"></i>
     </button>
