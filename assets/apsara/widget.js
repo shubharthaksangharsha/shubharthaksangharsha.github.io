@@ -118,8 +118,24 @@ async function connectToBackend() {
                 console.log('Disconnected from backend');
                 isConnected = false;
                 isListening = false;
-                updateStatus('Disconnected', 'error');
+                updateStatus('Disconnected');
                 stopMicrophone();
+                
+                // Reset to initial state after 2 seconds
+                setTimeout(() => {
+                    if (!isConnected) {
+                        updateStatus('Talk to Apsara');
+                        miniOrb.classList.remove('listening', 'speaking');
+                        muteButton.style.display = 'none';
+                        endButton.style.display = 'none';
+                        isMicMuted = false;
+                        const micOnIcon = muteButton.querySelector('.mic-on');
+                        const micOffIcon = muteButton.querySelector('.mic-off');
+                        micOnIcon.style.display = 'block';
+                        micOffIcon.style.display = 'none';
+                        muteButton.classList.remove('muted');
+                    }
+                }, 2000);
             };
         } catch (error) {
             reject(error);
