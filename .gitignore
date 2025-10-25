@@ -1,6 +1,9 @@
 # Apsara Live Backend & Development Files
 apsara-live/
 
+# But keep the widget files in assets (needed for website)
+!assets/apsara/
+
 # Node modules (if any)
 node_modules/
 
