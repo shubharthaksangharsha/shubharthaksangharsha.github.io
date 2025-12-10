@@ -27,6 +27,14 @@ let bufferLength = null;
 // Widget state
 let isExpanded = false;
 
+// Mobile-optimized audio playback
+let playbackContext = null;
+let nextPlayTime = 0;
+let scheduledSources = [];
+
+// Detect mobile device
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 // DOM Elements
 const widgetPanel = document.getElementById('widgetPanel');
 const widgetText = document.getElementById('widgetText');
@@ -118,24 +126,8 @@ async function connectToBackend() {
                 console.log('Disconnected from backend');
                 isConnected = false;
                 isListening = false;
-                updateStatus('Disconnected');
+                updateStatus('Disconnected', 'error');
                 stopMicrophone();
-                
-                // Reset to initial state after 2 seconds
-                setTimeout(() => {
-                    if (!isConnected) {
-                        updateStatus('Talk to Apsara');
-                        miniOrb.classList.remove('listening', 'speaking');
-                        muteButton.style.display = 'none';
-                        endButton.style.display = 'none';
-                        isMicMuted = false;
-                        const micOnIcon = muteButton.querySelector('.mic-on');
-                        const micOffIcon = muteButton.querySelector('.mic-off');
-                        micOnIcon.style.display = 'block';
-                        micOffIcon.style.display = 'none';
-                        muteButton.classList.remove('muted');
-                    }
-                }, 2000);
             };
         } catch (error) {
             reject(error);
@@ -275,21 +267,47 @@ function convertToPCM16(float32Array) {
     return buffer;
 }
 
-// Audio Playback
+// Audio Playback - Mobile Optimized with Seamless Streaming
 function addAudioToQueue(base64Audio) {
-    console.log('➕ Adding audio to queue, length:', base64Audio.length);
     audioQueue.push(base64Audio);
-    console.log('📊 Queue size:', audioQueue.length, 'isPlaying:', isPlaying);
     if (!isPlaying) {
-        console.log('▶️ Starting playback...');
-        playNextAudio();
+        processAudioQueue();
     }
 }
 
-async function playNextAudio() {
+// Initialize persistent playback context (called on user gesture/start)
+async function initPlaybackContext() {
+    if (!playbackContext || playbackContext.state === 'closed') {
+        playbackContext = new (window.AudioContext || window.webkitAudioContext)({ 
+            sampleRate: 24000,
+            latencyHint: isMobile ? 'playback' : 'interactive'
+        });
+        // Reset the play time when creating new context
+        nextPlayTime = 0;
+    }
+    
+    // Resume if suspended (required for mobile browsers after user gesture)
+    if (playbackContext.state === 'suspended') {
+        await playbackContext.resume();
+    }
+    
+    return playbackContext;
+}
+
+async function processAudioQueue() {
     if (audioQueue.length === 0) {
-        console.log('⏹️ Queue empty, stopping playback');
+        // Check if there's still scheduled audio playing
+        if (scheduledSources.length > 0 && playbackContext) {
+            const currentTime = playbackContext.currentTime;
+            const hasActiveAudio = scheduledSources.some(item => item.endTime > currentTime);
+            if (hasActiveAudio) {
+                setTimeout(() => processAudioQueue(), 50);
+                return;
+            }
+        }
         isPlaying = false;
+        miniOrb.classList.remove('speaking');
+        miniOrb.classList.add('listening');
         updateStatus('Listening...');
         return;
     }
@@ -299,54 +317,97 @@ async function playNextAudio() {
     miniOrb.classList.add('speaking');
     updateStatus('Talk to interrupt');
 
+    // Ensure playback context is initialized and resumed
+    await initPlaybackContext();
+
+    // Process ONE audio chunk at a time, then schedule next check
     const base64Audio = audioQueue.shift();
-    console.log('🎵 Playing audio chunk, remaining in queue:', audioQueue.length);
     
     try {
-        // Decode base64 to array buffer
         const binaryString = atob(base64Audio);
         const bytes = new Uint8Array(binaryString.length);
         for (let i = 0; i < binaryString.length; i++) {
             bytes[i] = binaryString.charCodeAt(i);
         }
 
-        console.log('📦 Decoded audio:', bytes.length, 'bytes');
-
-        // Convert PCM to playable audio
-        const playbackContext = new AudioContext({ sampleRate: 24000 });
+        // Create audio buffer from PCM16 data
         const audioBuffer = playbackContext.createBuffer(1, bytes.length / 2, 24000);
         const channelData = audioBuffer.getChannelData(0);
 
-        // Convert 16-bit PCM to float
         const dataView = new DataView(bytes.buffer);
         for (let i = 0; i < channelData.length; i++) {
             const int16 = dataView.getInt16(i * 2, true);
             channelData[i] = int16 / 32768.0;
         }
 
-        console.log('✅ Audio buffer created, duration:', audioBuffer.duration, 'seconds');
-
-        const source = playbackContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(playbackContext.destination);
-        
-        source.onended = () => {
-            console.log('✅ Audio chunk finished playing');
-            playbackContext.close();
-            playNextAudio();
-        };
-
-        console.log('▶️ Starting audio playback NOW...');
-        source.start();
+        // Schedule this buffer to play after the previous one finishes
+        scheduleAudioBuffer(audioBuffer);
     } catch (error) {
-        console.error('❌ Audio playback error:', error);
-        playNextAudio();
+        console.error('Audio decode error:', error);
     }
+    
+    // Continue processing queue faster
+    setTimeout(() => processAudioQueue(), 5);
+}
+
+function scheduleAudioBuffer(audioBuffer) {
+    if (!playbackContext || playbackContext.state === 'closed') return;
+    
+    const source = playbackContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(playbackContext.destination);
+    
+    const currentTime = playbackContext.currentTime;
+    
+    // IMPORTANT: Schedule audio sequentially, not overlapping
+    // If nextPlayTime is in the past or not set, start from now with minimal buffer
+    if (nextPlayTime <= currentTime) {
+        nextPlayTime = currentTime + 0.01; // 10ms buffer
+    }
+    
+    const scheduleTime = nextPlayTime;
+    
+    try {
+        source.start(scheduleTime);
+    } catch (e) {
+        console.error('Audio start error:', e);
+        return;
+    }
+    
+    // Calculate when this buffer will END
+    const endTime = scheduleTime + audioBuffer.duration;
+    
+    // Track scheduled source for cleanup
+    scheduledSources.push({
+        source: source,
+        endTime: endTime
+    });
+    
+    // IMPORTANT: Next audio should start right after this one ends (seamless)
+    nextPlayTime = endTime;
+    
+    // Clean up old finished sources
+    scheduledSources = scheduledSources.filter(item => item.endTime > currentTime);
 }
 
 function stopAudioPlayback() {
     audioQueue = [];
     isPlaying = false;
+    
+    // Stop all scheduled sources
+    scheduledSources.forEach(item => {
+        try {
+            item.source.stop();
+        } catch (e) {
+            // Source may already be stopped
+        }
+    });
+    scheduledSources = [];
+    
+    // Reset next play time
+    if (playbackContext) {
+        nextPlayTime = playbackContext.currentTime;
+    }
 }
 
 // Visualization
@@ -415,6 +476,10 @@ async function handleStartClick() {
         updateStatus('Connecting...');
         muteButton.style.display = 'none';
         endButton.style.display = 'none';
+        
+        // Initialize playback context on user gesture (required for mobile)
+        await initPlaybackContext();
+        
         await connectToBackend();
         await startMicrophone();
         updateStatus('Listening...');
@@ -438,6 +503,12 @@ function handleEndClick(e) {
     if (ws) {
         ws.close();
     }
+    
+    // Close playback context to save resources
+    if (playbackContext && playbackContext.state !== 'closed') {
+        playbackContext.close();
+        playbackContext = null;
+    }
 
     miniOrb.classList.remove('listening', 'speaking');
     updateStatus('Talk to Apsara');
@@ -456,4 +527,27 @@ function handleEndClick(e) {
 
 // Initialize on load
 init();
+
+// Handle page visibility changes (mobile browsers suspend audio when app is backgrounded)
+document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' && isConnected) {
+        // Resume audio context when page becomes visible again
+        if (playbackContext && playbackContext.state === 'suspended') {
+            try {
+                await playbackContext.resume();
+                console.log('Playback context resumed after visibility change');
+            } catch (e) {
+                console.error('Failed to resume playback context:', e);
+            }
+        }
+        if (audioContext && audioContext.state === 'suspended') {
+            try {
+                await audioContext.resume();
+                console.log('Audio context resumed after visibility change');
+            } catch (e) {
+                console.error('Failed to resume audio context:', e);
+            }
+        }
+    }
+});
 
