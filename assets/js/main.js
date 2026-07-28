@@ -23,12 +23,17 @@
 		if (browser.name == 'ie')
 			$body.addClass('is-ie');
 
-	// Play initial animations on page load.
-		$window.on('load', function() {
+	// Play initial animations once DOM is ready (don't wait on images/iframes).
+		function unlockPreload() {
 			window.setTimeout(function() {
 				$body.removeClass('is-preload');
 			}, 100);
-		});
+		}
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', unlockPreload);
+		} else {
+			unlockPreload();
+		}
 
 	// Forms.
 

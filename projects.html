@@ -46,9 +46,11 @@
     <meta name="twitter:image" content="https://devshubh.me/images/og-image.jpg">
 
     <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/projects-page.css" />
+    <link rel="preload" href="assets/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <body class="is-preload">
@@ -143,17 +145,16 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/projects-page.js"></script>
+    <script src="assets/js/jquery.min.js" defer></script>
+    <script src="assets/js/jquery.scrollex.min.js" defer></script>
+    <script src="assets/js/jquery.scrolly.min.js" defer></script>
+    <script src="assets/js/browser.min.js" defer></script>
+    <script src="assets/js/breakpoints.min.js" defer></script>
+    <script src="assets/js/util.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/projects-page.js" defer></script>
 
-    <!-- Apsara Voice Assistant Widget -->
-    <link rel="stylesheet" href="assets/apsara/widget.css" />
+    <!-- Apsara Voice Assistant Widget (deferred) -->
     <div class="apsara-widget" id="apsaraWidget">
         <!-- Compact Widget Panel - Always visible, changes state -->
         <div class="widget-panel active" id="widgetPanel">
@@ -197,7 +198,30 @@
             </div>
         </div>
     </div>
-    <script src="assets/apsara/widget.js"></script>
+    <script>
+        (function () {
+            function loadApsara() {
+                if (window.__apsaraLoading) return;
+                window.__apsaraLoading = true;
+                var css = document.createElement('link');
+                css.rel = 'stylesheet';
+                css.href = 'assets/apsara/widget.css';
+                document.head.appendChild(css);
+                var s = document.createElement('script');
+                s.src = 'assets/apsara/widget.js';
+                s.defer = true;
+                document.body.appendChild(s);
+            }
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadApsara, { timeout: 4000 });
+            } else {
+                setTimeout(loadApsara, 2500);
+            }
+            ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (evt) {
+                window.addEventListener(evt, loadApsara, { once: true, passive: true });
+            });
+        })();
+    </script>
 
 </body>
 </html>
