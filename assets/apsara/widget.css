@@ -27,7 +27,6 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease, width 0.3s ease;
     animation: widgetSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     width: auto;
-    max-width: 420px;
 }
 
 @keyframes widgetSlideUp {
@@ -116,67 +115,6 @@
     white-space: nowrap;
     letter-spacing: -0.01em;
     flex-shrink: 0;
-}
-
-/* ── Text Input Form ── */
-.widget-input-form {
-    display: none;
-    align-items: center;
-    gap: 6px;
-    margin: 0;
-    flex: 1;
-    min-width: 0;
-}
-
-.widget-input-form input[type="text"] {
-    height: 30px;
-    padding: 0 12px;
-    font-size: 12px;
-    font-family: inherit;
-    border-radius: 15px;
-    border: 1px solid rgba(94, 66, 166, 0.25);
-    outline: none;
-    background: rgba(94, 66, 166, 0.05);
-    color: #2d2d3a;
-    flex: 1;
-    min-width: 0;
-    width: 110px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    box-sizing: border-box;
-}
-
-.widget-input-form input[type="text"]:focus {
-    border-color: rgba(94, 66, 166, 0.5);
-    box-shadow: 0 0 0 2px rgba(94, 66, 166, 0.12);
-    background: #ffffff;
-}
-
-.widget-input-form input[type="text"]::placeholder {
-    color: #888;
-    font-size: 11px;
-}
-
-.widget-input-form button[type="submit"] {
-    height: 28px;
-    width: 28px;
-    min-width: 28px;
-    padding: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #5e42a6, #b74e91);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    font-size: 10px;
-    flex-shrink: 0;
-}
-
-.widget-input-form button[type="submit"]:hover {
-    transform: scale(1.08);
-    box-shadow: 0 2px 8px rgba(94, 66, 166, 0.35);
 }
 
 /* ── Mute Button ── */
@@ -268,26 +206,11 @@
         left: auto;
     }
 
-    /* Unconnected: Compact floating pill on bottom right */
     .widget-panel {
         width: auto;
         padding: 5px 12px 5px 5px;
         gap: 6px;
         border-radius: 22px;
-    }
-
-    /* Connected: Stretch across bottom */
-    .apsara-widget.active-connected,
-    .widget-panel.connected {
-        position: fixed;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        max-width: none;
-    }
-
-    .widget-panel.connected .widget-text {
-        display: none !important; /* Hide "Listening..." on mobile so text field fits cleanly */
     }
 
     .visualizer-container {
@@ -316,29 +239,6 @@
 
     .widget-content {
         gap: 6px;
-    }
-
-    .widget-input-form {
-        gap: 5px;
-        flex: 1;
-        min-width: 0;
-    }
-
-    .widget-input-form input[type="text"] {
-        height: 28px;
-        font-size: 12px;
-        padding: 0 10px;
-        border-radius: 14px;
-        width: 100%;
-        min-width: 0;
-        flex: 1;
-    }
-
-    .widget-input-form button[type="submit"] {
-        height: 26px;
-        width: 26px;
-        min-width: 26px;
-        font-size: 9px;
     }
 
     .mute-button {

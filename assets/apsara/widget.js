@@ -63,28 +63,10 @@ function setupVisualizerCanvas() {
     visualizerContext = miniVisualizer.getContext('2d');
 }
 
-const widgetInputForm = document.getElementById('widgetInputForm');
-const widgetTextInput = document.getElementById('widgetTextInput');
-
 function setupEventListeners() {
     widgetPanel.addEventListener('click', handleWidgetClick);
     muteButton.addEventListener('click', handleMuteToggle);
     endButton.addEventListener('click', handleEndClick);
-    if (widgetInputForm) {
-        widgetInputForm.addEventListener('submit', handleTextSubmit);
-    }
-}
-
-function handleTextSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!widgetTextInput) return;
-    const text = widgetTextInput.value.trim();
-    if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
-    
-    ws.send(JSON.stringify({ type: 'text', data: text }));
-    widgetTextInput.value = '';
-    updateStatus('Thinking...');
 }
 
 // Widget Controls
@@ -526,14 +508,12 @@ async function handleStartClick() {
         if (widgetPanel) widgetPanel.classList.add('connected');
         muteButton.style.display = 'flex';
         endButton.style.display = 'flex';
-        if (widgetInputForm) widgetInputForm.style.display = 'flex';
     } catch (error) {
         console.error('Failed to start:', error);
         updateStatus('Error - Try again');
         if (widgetPanel) widgetPanel.classList.remove('connected');
         muteButton.style.display = 'none';
         endButton.style.display = 'none';
-        if (widgetInputForm) widgetInputForm.style.display = 'none';
     }
 }
 
@@ -559,7 +539,6 @@ function handleEndClick(e) {
     updateStatus('Talk to Apsara');
     muteButton.style.display = 'none';
     endButton.style.display = 'none';
-    if (widgetInputForm) widgetInputForm.style.display = 'none';
     isConnected = false;
     
     // Reset mute state
