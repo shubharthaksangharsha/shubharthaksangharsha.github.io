@@ -408,7 +408,24 @@ wss.on('connection', (clientWs) => {
                     }
                 });
             } else if (message.type === 'text' && geminiWs) {
-                geminiWs.sendClientContent({ turns: message.data });
+                const textMsg = typeof message.data === 'string' ? message.data : 
+                               (Array.isArray(message.data) ? message.data[0]?.parts?.[0]?.text : String(message.data));
+                console.log('💬 Forwarding text to Gemini via sendRealtimeInput:', textMsg);
+                
+                try {
+                    if (typeof geminiWs.sendRealtimeInput === 'function') {
+                        geminiWs.sendRealtimeInput({ text: textMsg });
+                    } else if (typeof geminiWs.sendClientContent === 'function') {
+                        geminiWs.sendClientContent({
+                            turns: [{
+                                role: 'user',
+                                parts: [{ text: textMsg }]
+                            }]
+                        });
+                    }
+                } catch (err) {
+                    console.error('Error forwarding text to Gemini:', err);
+                }
             }
         } catch (error) {
             console.error('Error handling client message:', error);

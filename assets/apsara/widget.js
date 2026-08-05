@@ -82,11 +82,7 @@ function handleTextSubmit(e) {
     const text = widgetTextInput.value.trim();
     if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
     
-    const textTurn = [{
-        role: "user",
-        parts: [{ text: text }]
-    }];
-    ws.send(JSON.stringify({ type: 'text', data: textTurn }));
+    ws.send(JSON.stringify({ type: 'text', data: text }));
     widgetTextInput.value = '';
     updateStatus('Thinking...');
 }
