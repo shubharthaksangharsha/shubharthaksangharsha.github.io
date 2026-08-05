@@ -96,18 +96,23 @@ p {
     display: flex !important;
     align-items: center !important;
     min-height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
 }
 
 #projects.spotlights > section > .video-container {
-    width: 42% !important;
-    min-width: 280px;
+    width: 40% !important;
+    flex: 0 0 40% !important;
+    min-width: 260px;
     aspect-ratio: 16 / 9;
     position: relative;
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
-    margin: 1.5em;
+    margin: 1.5em 0.5em 1.5em 1.5em !important;
+    box-sizing: border-box !important;
 }
 
 #projects.spotlights > section > .video-container iframe {
@@ -120,8 +125,12 @@ p {
 }
 
 #projects.spotlights > section > .content {
-    width: 58% !important;
+    flex: 1 1 0% !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     padding: 2.5em 2em !important;
+    box-sizing: border-box !important;
 }
 
 @media screen and (max-width: 980px) {
@@ -131,6 +140,7 @@ p {
 
     #projects.spotlights > section > .video-container {
         width: 100% !important;
+        flex: 1 1 100% !important;
         margin: 0 !important;
         border-radius: 0;
     }
