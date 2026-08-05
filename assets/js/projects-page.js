@@ -8,6 +8,7 @@
     
     // Specific repos to display in order with descriptions
     const SELECTED_REPOS = [
+        { name: 'action-conditioned-world-models-navigation', desc: 'Action-Conditioned RSSM World Models & Hybrid CEM Planner for Autonomous Mapless Navigation (Unitree Go2 Sim-to-Real Transfer)', displayName: 'Action-Conditioned World Models Navigation' },
         { name: 'karpathy', desc: "A comprehensive collection of machine learning and neural network implementations following Andrej Karpathy's 'Neural Networks: Zero to Hero' course. This repository contains hands-on implementations from basic neural networks to advanced transformer architectures." },
         { name: 'apsara2.5', desc: 'Latest Apsara voice assistant with web interface', link: 'https://apsara.devshubh.me' },
         { name: 'apsara2.0', desc: 'Enhanced version of Apsara voice assistant' },

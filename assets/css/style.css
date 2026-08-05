@@ -91,11 +91,54 @@ p {
     }
 }
 
-/*video responsiveness - Only apply to project section videos */
-#projects iframe {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
+/* Video & Spotlight Layout Responsiveness */
+#projects.spotlights > section {
+    display: flex !important;
+    align-items: center !important;
+    min-height: auto !important;
+}
+
+#projects.spotlights > section > .video-container {
+    width: 42% !important;
+    min-width: 280px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    margin: 1.5em;
+}
+
+#projects.spotlights > section > .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+}
+
+#projects.spotlights > section > .content {
+    width: 58% !important;
+    padding: 2.5em 2em !important;
+}
+
+@media screen and (max-width: 980px) {
+    #projects.spotlights > section {
+        flex-direction: column !important;
+    }
+
+    #projects.spotlights > section > .video-container {
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 0;
+    }
+
+    #projects.spotlights > section > .content {
+        width: 100% !important;
+        padding: 2em 1.5em !important;
+    }
 }
 
 @media(min-width:1024px) {
