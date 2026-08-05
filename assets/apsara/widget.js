@@ -58,8 +58,8 @@ function init() {
 }
 
 function setupVisualizerCanvas() {
-    miniVisualizer.width = 45;
-    miniVisualizer.height = 45;
+    miniVisualizer.width = 40;
+    miniVisualizer.height = 40;
     visualizerContext = miniVisualizer.getContext('2d');
 }
 
@@ -113,11 +113,21 @@ function handleMuteToggle(e) {
         micOffIcon.style.display = 'block';
         muteButton.classList.add('muted');
         muteButton.title = 'Unmute microphone';
+        // Disconnect processor so no audio frames leak to backend
+        if (processor && microphone) {
+            try { processor.disconnect(); } catch (ex) {}
+        }
     } else {
         micOnIcon.style.display = 'block';
         micOffIcon.style.display = 'none';
         muteButton.classList.remove('muted');
         muteButton.title = 'Mute microphone';
+        // Reconnect processor to resume sending audio
+        if (processor && audioContext) {
+            try {
+                processor.connect(audioContext.destination);
+            } catch (ex) {}
+        }
     }
 }
 

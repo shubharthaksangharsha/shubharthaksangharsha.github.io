@@ -629,7 +629,7 @@
         <div class="widget-panel active" id="widgetPanel">
             <!-- Visualizer (small, on left) -->
             <div class="visualizer-container">
-                <canvas id="miniVisualizer" width="45" height="45"></canvas>
+                <canvas id="miniVisualizer" width="40" height="40"></canvas>
                 <div class="visualizer-orb" id="miniOrb">
                     <div class="orb-inner"></div>
                 </div>
@@ -640,9 +640,9 @@
                 <div class="widget-text" id="widgetText">Talk to Apsara</div>
 
                 <!-- Text Input Fallback -->
-                <form class="widget-input-form" id="widgetInputForm" style="display: none; margin: 0; align-items: center; gap: 4px;">
-                    <input type="text" id="widgetTextInput" placeholder="Ask Apsara..." autocomplete="off" style="padding: 4px 10px; font-size: 12px; height: 30px; border-radius: 15px; border: 1px solid #ddd; outline: none; background: #ffffff; color: #333; width: 120px;" />
-                    <button type="submit" style="height: 30px; width: 30px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #5e42a6; color: white; border: none; cursor: pointer;" title="Send message"><i class="fas fa-paper-plane" style="font-size: 10px;"></i></button>
+                <form class="widget-input-form" id="widgetInputForm">
+                    <input type="text" id="widgetTextInput" placeholder="Type a message..." autocomplete="off" />
+                    <button type="submit" title="Send message"><i class="fas fa-paper-plane"></i></button>
                 </form>
 
                 <!-- Mute/Unmute Button -->
@@ -665,13 +665,12 @@
                 </button>
 
                 <!-- End Button -->
-                <button class="end-button" id="endButton" style="display: none;">
+                <button class="end-button" id="endButton" style="display: none;" title="End session">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
+                        stroke-width="2.5">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
-                    <span>End</span>
                 </button>
             </div>
         </div>
