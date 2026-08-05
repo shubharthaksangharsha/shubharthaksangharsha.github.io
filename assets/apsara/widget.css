@@ -1,4 +1,4 @@
-/* Apsara Widget - Premium Compact Voice Assistant */
+/* Apsara Widget - Premium Glassmorphic Voice Assistant */
 
 .apsara-widget {
     position: fixed;
@@ -6,6 +6,7 @@
     right: 18px;
     z-index: 10000;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    transition: all 0.3s ease;
 }
 
 /* ── Widget Panel ── */
@@ -13,18 +14,20 @@
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 28px;
     box-shadow:
         0 4px 24px rgba(0, 0, 0, 0.12),
         0 1px 4px rgba(0, 0, 0, 0.06);
-    padding: 6px 12px 6px 6px;
+    padding: 6px 14px 6px 6px;
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, width 0.3s ease;
     animation: widgetSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: auto;
+    max-width: 420px;
 }
 
 @keyframes widgetSlideUp {
@@ -100,7 +103,7 @@
 .widget-content {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex: 1;
     min-width: 0;
     flex-wrap: nowrap;
@@ -119,43 +122,44 @@
 .widget-input-form {
     display: none;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     margin: 0;
     flex: 1;
     min-width: 0;
 }
 
 .widget-input-form input[type="text"] {
-    height: 28px;
-    padding: 0 10px;
+    height: 30px;
+    padding: 0 12px;
     font-size: 12px;
     font-family: inherit;
-    border-radius: 14px;
-    border: 1px solid rgba(94, 66, 166, 0.2);
+    border-radius: 15px;
+    border: 1px solid rgba(94, 66, 166, 0.25);
     outline: none;
-    background: rgba(94, 66, 166, 0.04);
+    background: rgba(94, 66, 166, 0.05);
     color: #2d2d3a;
     flex: 1;
     min-width: 0;
-    width: 80px;
+    width: 110px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     box-sizing: border-box;
 }
 
 .widget-input-form input[type="text"]:focus {
-    border-color: rgba(94, 66, 166, 0.45);
-    box-shadow: 0 0 0 2px rgba(94, 66, 166, 0.08);
+    border-color: rgba(94, 66, 166, 0.5);
+    box-shadow: 0 0 0 2px rgba(94, 66, 166, 0.12);
+    background: #ffffff;
 }
 
 .widget-input-form input[type="text"]::placeholder {
-    color: #aaa;
+    color: #888;
     font-size: 11px;
 }
 
 .widget-input-form button[type="submit"] {
-    height: 26px;
-    width: 26px;
-    min-width: 26px;
+    height: 28px;
+    width: 28px;
+    min-width: 28px;
     padding: 0;
     border-radius: 50%;
     display: flex;
@@ -172,7 +176,7 @@
 
 .widget-input-form button[type="submit"]:hover {
     transform: scale(1.08);
-    box-shadow: 0 2px 8px rgba(94, 66, 166, 0.3);
+    box-shadow: 0 2px 8px rgba(94, 66, 166, 0.35);
 }
 
 /* ── Mute Button ── */
@@ -209,7 +213,7 @@
 }
 
 .mute-button.muted {
-    background: rgba(229, 57, 53, 0.08);
+    background: rgba(229, 57, 53, 0.1);
 }
 
 .mute-button.muted svg {
@@ -217,7 +221,7 @@
 }
 
 .mute-button.muted:hover {
-    background: rgba(229, 57, 53, 0.14);
+    background: rgba(229, 57, 53, 0.18);
 }
 
 /* ── End Button ── */
@@ -249,65 +253,85 @@
 }
 
 .end-button:hover {
-    background: rgba(229, 57, 53, 0.1);
+    background: rgba(229, 57, 53, 0.12);
 }
 
 .end-button:hover svg {
     stroke: #c62828;
 }
 
-/* ── Mobile ── */
+/* ── Mobile Responsive (Screen <= 480px) ── */
 @media screen and (max-width: 480px) {
     .apsara-widget {
-        right: 10px;
-        bottom: 10px;
-        left: 10px;
+        right: 14px;
+        bottom: 14px;
+        left: auto;
     }
 
+    /* Unconnected: Compact floating pill on bottom right */
     .widget-panel {
-        max-width: 100%;
-        padding: 5px 10px 5px 5px;
+        width: auto;
+        padding: 5px 12px 5px 5px;
         gap: 6px;
         border-radius: 22px;
     }
 
+    /* Connected: Stretch across bottom */
+    .apsara-widget.active-connected,
+    .widget-panel.connected {
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        max-width: none;
+    }
+
+    .widget-panel.connected .widget-text {
+        display: none !important; /* Hide "Listening..." on mobile so text field fits cleanly */
+    }
+
     .visualizer-container {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
     }
 
     #miniVisualizer {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
     }
 
     .visualizer-orb {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
     }
 
     .orb-inner {
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
     }
 
     .widget-text {
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .widget-content {
-        gap: 5px;
+        gap: 6px;
     }
 
     .widget-input-form {
-        gap: 4px;
+        gap: 5px;
+        flex: 1;
+        min-width: 0;
     }
 
     .widget-input-form input[type="text"] {
-        height: 26px;
+        height: 28px;
         font-size: 12px;
-        padding: 0 8px;
-        border-radius: 13px;
+        padding: 0 10px;
+        border-radius: 14px;
+        width: 100%;
+        min-width: 0;
+        flex: 1;
     }
 
     .widget-input-form button[type="submit"] {

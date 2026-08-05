@@ -113,14 +113,9 @@ function handleMuteToggle(e) {
         micOffIcon.style.display = 'block';
         muteButton.classList.add('muted');
         muteButton.title = 'Unmute microphone';
-        // Send a burst of silence frames so Gemini's VAD detects end-of-speech
-        // and processes whatever was said before muting
+        // Send audioStreamEnd signal to Gemini via WebSocket proxy
         if (ws && ws.readyState === WebSocket.OPEN) {
-            const silentPCM = new ArrayBuffer(4096 * 2); // 4096 silent samples
-            const silentBase64 = btoa(String.fromCharCode(...new Uint8Array(silentPCM)));
-            for (let i = 0; i < 3; i++) {
-                ws.send(JSON.stringify({ type: 'audio', data: silentBase64 }));
-            }
+            ws.send(JSON.stringify({ type: 'audioStreamEnd' }));
         }
     } else {
         micOnIcon.style.display = 'block';
@@ -528,12 +523,14 @@ async function handleStartClick() {
         await connectToBackend();
         await startMicrophone();
         updateStatus('Listening...');
+        if (widgetPanel) widgetPanel.classList.add('connected');
         muteButton.style.display = 'flex';
         endButton.style.display = 'flex';
         if (widgetInputForm) widgetInputForm.style.display = 'flex';
     } catch (error) {
         console.error('Failed to start:', error);
         updateStatus('Error - Try again');
+        if (widgetPanel) widgetPanel.classList.remove('connected');
         muteButton.style.display = 'none';
         endButton.style.display = 'none';
         if (widgetInputForm) widgetInputForm.style.display = 'none';
@@ -558,6 +555,7 @@ function handleEndClick(e) {
     }
 
     miniOrb.classList.remove('listening', 'speaking');
+    if (widgetPanel) widgetPanel.classList.remove('connected');
     updateStatus('Talk to Apsara');
     muteButton.style.display = 'none';
     endButton.style.display = 'none';

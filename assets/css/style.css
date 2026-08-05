@@ -259,6 +259,20 @@ elevenlabs-convai {
     box-shadow: 0 6px 18px rgba(183, 78, 145, 0.4) !important;
 }
 
+@media screen and (max-width: 480px) {
+    #scroll-top.scroll-top-btn,
+    .scroll-top-btn {
+        bottom: 75px !important;
+        right: 16px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+        line-height: 34px !important;
+        font-size: 12px !important;
+    }
+}
+
 .fade-in {
     opacity: 0;
     transform: translateY(20px);

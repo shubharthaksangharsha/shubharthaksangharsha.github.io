@@ -203,6 +203,15 @@ wss.on('connection', (clientWs) => {
                         mimeType: 'audio/pcm;rate=16000'
                     }
                 });
+            } else if ((message.type === 'audioStreamEnd' || message.type === 'mute') && geminiWs) {
+                console.log('🔇 Forwarding audioStreamEnd to Gemini...');
+                try {
+                    geminiWs.sendRealtimeInput({
+                        audioStreamEnd: true
+                    });
+                } catch (err) {
+                    console.error('Error forwarding audioStreamEnd to Gemini:', err);
+                }
             } else if (message.type === 'text' && geminiWs) {
                 const textMsg = typeof message.data === 'string' ? message.data : 
                                (Array.isArray(message.data) ? message.data[0]?.parts?.[0]?.text : String(message.data));
