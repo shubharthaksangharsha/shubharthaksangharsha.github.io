@@ -226,8 +226,8 @@ elevenlabs-convai {
 
 .scroll-top-btn {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 85px;
+    right: 25px;
     background: #5e42a6;
     color: white;
     width: 45px;
@@ -239,6 +239,7 @@ elevenlabs-convai {
     z-index: 9999;
     transition: all 0.3s ease;
     font-size: 1.2em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-top-btn:hover {
