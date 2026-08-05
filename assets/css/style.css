@@ -224,27 +224,39 @@ elevenlabs-convai {
     transition: width 0.5s ease-out;
 }
 
+#scroll-top.scroll-top-btn,
 .scroll-top-btn {
-    position: fixed;
-    bottom: 85px;
-    right: 25px;
-    background: #5e42a6;
-    color: white;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 25px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 38px !important;
+    border-radius: 50% !important;
+    background: #5e42a6 !important;
+    color: #ffffff !important;
+    border: none !important;
+    outline: none !important;
+    cursor: pointer !important;
     display: none;
-    z-index: 9999;
-    transition: all 0.3s ease;
-    font-size: 1.2em;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 99999 !important;
+    transition: all 0.25s ease-in-out !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
 }
 
+#scroll-top.scroll-top-btn:hover,
 .scroll-top-btn:hover {
-    background: #b74e91;
-    transform: translateY(-3px);
+    background: #b74e91 !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 6px 18px rgba(183, 78, 145, 0.4) !important;
 }
 
 .fade-in {
