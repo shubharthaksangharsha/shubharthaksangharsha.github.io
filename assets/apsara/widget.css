@@ -2,94 +2,80 @@
 
 .apsara-widget {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 18px;
+    right: 18px;
     z-index: 10000;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* ── Widget Panel ── */
 .widget-panel {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 26px;
     box-shadow:
         0 4px 24px rgba(0, 0, 0, 0.12),
-        0 1px 4px rgba(0, 0, 0, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    padding: 7px 14px 7px 7px;
+        0 1px 4px rgba(0, 0, 0, 0.06);
+    padding: 6px 12px 6px 6px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     animation: widgetSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    max-width: 420px;
 }
 
 @keyframes widgetSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .widget-panel:hover {
     transform: translateY(-2px);
-    box-shadow:
-        0 8px 32px rgba(94, 66, 166, 0.18),
-        0 2px 8px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 /* ── Visualizer / Orb ── */
 .visualizer-container {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
 }
 
 #miniVisualizer {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
+    top: 0; left: 0;
+    width: 38px;
+    height: 38px;
 }
 
 .visualizer-orb {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #7c5ce0 0%, #5e42a6 40%, #b74e91 100%);
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #32CD32 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 3px 12px rgba(94, 66, 166, 0.35);
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
     transition: all 0.3s ease;
     z-index: 2;
 }
 
 .visualizer-orb.listening {
     animation: orbPulse 2.4s ease-in-out infinite;
-    box-shadow: 0 0 18px rgba(94, 66, 166, 0.45);
+    box-shadow: 0 0 16px rgba(50, 205, 50, 0.45);
 }
 
 .visualizer-orb.speaking {
     animation: orbPulseFast 0.7s ease-in-out infinite;
-    box-shadow: 0 0 22px rgba(183, 78, 145, 0.55);
-    background: linear-gradient(145deg, #b74e91 0%, #5e42a6 60%, #7c5ce0 100%);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
 @keyframes orbPulse {
@@ -103,8 +89,8 @@
 }
 
 .orb-inner {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(6px);
@@ -114,10 +100,10 @@
 .widget-content {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex: 1;
     min-width: 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .widget-text {
@@ -133,42 +119,43 @@
 .widget-input-form {
     display: none;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     margin: 0;
-    flex-shrink: 1;
+    flex: 1;
     min-width: 0;
 }
 
 .widget-input-form input[type="text"] {
-    height: 30px;
-    padding: 0 12px;
+    height: 28px;
+    padding: 0 10px;
     font-size: 12px;
     font-family: inherit;
-    border-radius: 15px;
+    border-radius: 14px;
     border: 1px solid rgba(94, 66, 166, 0.2);
     outline: none;
     background: rgba(94, 66, 166, 0.04);
     color: #2d2d3a;
-    width: 110px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease;
+    flex: 1;
+    min-width: 0;
+    width: 80px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     box-sizing: border-box;
 }
 
 .widget-input-form input[type="text"]:focus {
     border-color: rgba(94, 66, 166, 0.45);
-    box-shadow: 0 0 0 3px rgba(94, 66, 166, 0.08);
-    width: 130px;
+    box-shadow: 0 0 0 2px rgba(94, 66, 166, 0.08);
 }
 
 .widget-input-form input[type="text"]::placeholder {
-    color: #999;
+    color: #aaa;
     font-size: 11px;
 }
 
 .widget-input-form button[type="submit"] {
-    height: 28px;
-    width: 28px;
-    min-width: 28px;
+    height: 26px;
+    width: 26px;
+    min-width: 26px;
     padding: 0;
     border-radius: 50%;
     display: flex;
@@ -192,21 +179,25 @@
 .mute-button {
     background: transparent;
     border: none;
-    padding: 5px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease;
     border-radius: 50%;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .mute-button svg {
     width: 16px;
     height: 16px;
     stroke: #666;
-    transition: all 0.2s ease;
+    transition: stroke 0.2s ease;
 }
 
 .mute-button:hover {
@@ -218,7 +209,7 @@
 }
 
 .mute-button.muted {
-    background: rgba(255, 75, 75, 0.08);
+    background: rgba(229, 57, 53, 0.08);
 }
 
 .mute-button.muted svg {
@@ -226,29 +217,30 @@
 }
 
 .mute-button.muted:hover {
-    background: rgba(255, 75, 75, 0.14);
+    background: rgba(229, 57, 53, 0.14);
 }
 
 /* ── End Button ── */
 .end-button {
     background: transparent;
-    color: #e53935;
     border: none;
-    padding: 5px;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    padding: 0;
     border-radius: 50%;
-    font-size: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    white-space: nowrap;
+    transition: background 0.2s ease;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .end-button svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     stroke: #e53935;
 }
 
@@ -264,80 +256,86 @@
     stroke: #c62828;
 }
 
-/* ── Mobile Responsive ── */
+/* ── Mobile ── */
 @media screen and (max-width: 480px) {
     .apsara-widget {
-        right: 8px;
+        right: 10px;
         bottom: 10px;
-        left: 8px;
+        left: 10px;
     }
 
     .widget-panel {
         max-width: 100%;
-        padding: 6px 12px 6px 6px;
-        gap: 8px;
-        border-radius: 24px;
+        padding: 5px 10px 5px 5px;
+        gap: 6px;
+        border-radius: 22px;
     }
 
     .visualizer-container {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     #miniVisualizer {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     .visualizer-orb {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 
     .orb-inner {
+        width: 14px;
+        height: 14px;
+    }
+
+    .widget-text {
+        font-size: 11px;
+    }
+
+    .widget-content {
+        gap: 5px;
+    }
+
+    .widget-input-form {
+        gap: 4px;
+    }
+
+    .widget-input-form input[type="text"] {
+        height: 26px;
+        font-size: 12px;
+        padding: 0 8px;
+        border-radius: 13px;
+    }
+
+    .widget-input-form button[type="submit"] {
+        height: 26px;
+        width: 26px;
+        min-width: 26px;
+        font-size: 9px;
+    }
+
+    .mute-button {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+    }
+
+    .mute-button svg {
         width: 15px;
         height: 15px;
     }
 
-    .widget-text {
-        font-size: 12px;
-    }
-
-    .widget-content {
-        gap: 6px;
-        flex-wrap: nowrap;
-    }
-
-    .widget-input-form {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .widget-input-form input[type="text"] {
-        width: 100%;
-        min-width: 0;
-        flex: 1;
-        font-size: 13px;
-        height: 32px;
-    }
-
-    .widget-input-form input[type="text"]:focus {
-        width: 100%;
-    }
-
-    .widget-input-form button[type="submit"] {
-        height: 30px;
-        width: 30px;
-        min-width: 30px;
-    }
-
-    .mute-button svg {
-        width: 18px;
-        height: 18px;
+    .end-button {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
     }
 
     .end-button svg {
-        width: 16px;
-        height: 16px;
+        width: 12px;
+        height: 12px;
     }
 }

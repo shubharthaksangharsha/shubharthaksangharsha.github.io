@@ -58,8 +58,8 @@ function init() {
 }
 
 function setupVisualizerCanvas() {
-    miniVisualizer.width = 40;
-    miniVisualizer.height = 40;
+    miniVisualizer.width = 38;
+    miniVisualizer.height = 38;
     visualizerContext = miniVisualizer.getContext('2d');
 }
 
@@ -113,21 +113,20 @@ function handleMuteToggle(e) {
         micOffIcon.style.display = 'block';
         muteButton.classList.add('muted');
         muteButton.title = 'Unmute microphone';
-        // Disconnect processor so no audio frames leak to backend
-        if (processor && microphone) {
-            try { processor.disconnect(); } catch (ex) {}
+        // Send a burst of silence frames so Gemini's VAD detects end-of-speech
+        // and processes whatever was said before muting
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            const silentPCM = new ArrayBuffer(4096 * 2); // 4096 silent samples
+            const silentBase64 = btoa(String.fromCharCode(...new Uint8Array(silentPCM)));
+            for (let i = 0; i < 3; i++) {
+                ws.send(JSON.stringify({ type: 'audio', data: silentBase64 }));
+            }
         }
     } else {
         micOnIcon.style.display = 'block';
         micOffIcon.style.display = 'none';
         muteButton.classList.remove('muted');
         muteButton.title = 'Mute microphone';
-        // Reconnect processor to resume sending audio
-        if (processor && audioContext) {
-            try {
-                processor.connect(audioContext.destination);
-            } catch (ex) {}
-        }
     }
 }
 

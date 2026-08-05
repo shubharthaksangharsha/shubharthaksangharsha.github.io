@@ -227,7 +227,7 @@ elevenlabs-convai {
 #scroll-top.scroll-top-btn,
 .scroll-top-btn {
     position: fixed !important;
-    bottom: 80px !important;
+    bottom: 90px !important;
     right: 25px !important;
     width: 38px !important;
     height: 38px !important;
