@@ -227,4 +227,43 @@
 	window.addEventListener('scroll', handleScrollAnimation);
 	handleScrollAnimation();
 
+	// Dynamic typing effect for Hero Subtitle
+	const heroSubtitle = document.querySelector('#intro p');
+	if (heroSubtitle) {
+		const roles = [
+			"Applied AI & ML Engineer | Master of AI & ML, University of Adelaide",
+			"World Models & Autonomous Robotics | Unitree Go2 Sim-to-Real",
+			"Multimodal LLMs & Conversational AI Assistants",
+			"Full-Stack Web Engineering | AWS Cloud Infrastructure"
+		];
+		let roleIndex = 0;
+		let charIndex = 0;
+		let isDeleting = false;
+
+		function typeRole() {
+			const currentRole = roles[roleIndex];
+			if (isDeleting) {
+				heroSubtitle.textContent = currentRole.substring(0, charIndex - 1);
+				charIndex--;
+			} else {
+				heroSubtitle.textContent = currentRole.substring(0, charIndex + 1);
+				charIndex++;
+			}
+
+			let typeSpeed = isDeleting ? 30 : 60;
+
+			if (!isDeleting && charIndex === currentRole.length) {
+				typeSpeed = 2200;
+				isDeleting = true;
+			} else if (isDeleting && charIndex === 0) {
+				isDeleting = false;
+				roleIndex = (roleIndex + 1) % roles.length;
+				typeSpeed = 400;
+			}
+
+			setTimeout(typeRole, typeSpeed);
+		}
+		setTimeout(typeRole, 600);
+	}
+
 })(jQuery);

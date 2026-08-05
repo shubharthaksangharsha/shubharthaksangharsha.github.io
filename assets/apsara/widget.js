@@ -63,10 +63,32 @@ function setupVisualizerCanvas() {
     visualizerContext = miniVisualizer.getContext('2d');
 }
 
+const widgetInputForm = document.getElementById('widgetInputForm');
+const widgetTextInput = document.getElementById('widgetTextInput');
+
 function setupEventListeners() {
     widgetPanel.addEventListener('click', handleWidgetClick);
     muteButton.addEventListener('click', handleMuteToggle);
     endButton.addEventListener('click', handleEndClick);
+    if (widgetInputForm) {
+        widgetInputForm.addEventListener('submit', handleTextSubmit);
+    }
+}
+
+function handleTextSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!widgetTextInput) return;
+    const text = widgetTextInput.value.trim();
+    if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
+    
+    const textTurn = [{
+        role: "user",
+        parts: [{ text: text }]
+    }];
+    ws.send(JSON.stringify({ type: 'text', data: textTurn }));
+    widgetTextInput.value = '';
+    updateStatus('Thinking...');
 }
 
 // Widget Controls
@@ -503,16 +525,18 @@ async function handleStartClick() {
         updateStatus('Listening...');
         muteButton.style.display = 'flex';
         endButton.style.display = 'flex';
+        if (widgetInputForm) widgetInputForm.style.display = 'flex';
     } catch (error) {
         console.error('Failed to start:', error);
         updateStatus('Error - Try again');
         muteButton.style.display = 'none';
         endButton.style.display = 'none';
+        if (widgetInputForm) widgetInputForm.style.display = 'none';
     }
 }
 
 function handleEndClick(e) {
-    e.stopPropagation();
+    if (e && e.stopPropagation) e.stopPropagation();
     
     // Stop everything
     stopMicrophone();
@@ -532,6 +556,7 @@ function handleEndClick(e) {
     updateStatus('Talk to Apsara');
     muteButton.style.display = 'none';
     endButton.style.display = 'none';
+    if (widgetInputForm) widgetInputForm.style.display = 'none';
     isConnected = false;
     
     // Reset mute state

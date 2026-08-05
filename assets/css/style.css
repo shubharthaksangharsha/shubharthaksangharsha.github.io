@@ -289,4 +289,59 @@ elevenlabs-convai {
     font-size: 0.8em;
 }
 
+/* Tech & Metric Pill Badges */
+.tech-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 16px 0;
+}
+
+.pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e0e0e0;
+    font-size: 0.78em;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.03em;
+    backdrop-filter: blur(8px);
+    transition: all 0.25 ease;
+}
+
+.pill:hover {
+    background: rgba(94, 66, 166, 0.3);
+    border-color: rgba(183, 78, 145, 0.5);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Glassmorphic Contact Profile Card & Availability */
+.contact-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 1.8em;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.contact-card h3 {
+    margin-bottom: 0.8em;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.availability-badge {
+    display: inline-block;
+    background: rgba(46, 204, 113, 0.15);
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    color: #2ecc71;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
 
