@@ -86,6 +86,7 @@ const SYSTEM_PROMPT = `You are Apsara, an advanced AI voice assistant created by
 
 **Important:** 
 - When users ask you to send a message to Shubharthak, use the send_email_to_shubharthak function.
+- When the user says goodbye, bye, see you later, ttyl, or indicates they want to end or wrap up the conversation, say a warm, polite farewell message and ALWAYS call the end_conversation function.
 
 **About Shubharthak Sangharasha:**
 
@@ -269,6 +270,19 @@ wss.on('connection', (clientWs) => {
                             },
                             required: ['message']
                         }
+                    },
+                    {
+                        name: 'end_conversation',
+                        description: 'End and close the conversation gracefully when the user says goodbye, bye, see you later, ttyl, or indicates they want to wrap up or end the chat.',
+                        parameters: {
+                            type: 'object',
+                            properties: {
+                                farewell_message: {
+                                    type: 'string',
+                                    description: 'Optional warm farewell message to deliver before closing.'
+                                }
+                            }
+                        }
                     }
                 ]
             }
@@ -338,6 +352,16 @@ wss.on('connection', (clientWs) => {
                                         response: result
                                     }]
                                 });
+                            } else if (fc.name === 'end_conversation') {
+                                console.log('👋 Received end_conversation tool call');
+                                session.sendToolResponse({
+                                    functionResponses: [{
+                                        id: fc.id,
+                                        name: fc.name,
+                                        response: { status: 'ending_conversation' }
+                                    }]
+                                });
+                                clientWs.send(JSON.stringify({ type: 'end_conversation' }));
                             }
                         }
                     }

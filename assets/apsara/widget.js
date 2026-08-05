@@ -21,6 +21,7 @@ let isConnected = false;
 let isListening = false;
 let audioQueue = [];
 let isPlaying = false;
+let shouldEndAfterTurn = false;
 
 // Audio visualization
 let visualizerContext = null;
@@ -149,6 +150,11 @@ function handleBackendMessage(message) {
 
         case 'gemini_message':
             handleGeminiMessage(message.data);
+            break;
+
+        case 'end_conversation':
+            console.log('👋 Received end_conversation signal');
+            shouldEndAfterTurn = true;
             break;
 
         case 'error':
@@ -312,6 +318,14 @@ async function processAudioQueue() {
         isPlaying = false;
         miniOrb.classList.remove('speaking');
         miniOrb.classList.add('listening');
+        if (shouldEndAfterTurn) {
+            shouldEndAfterTurn = false;
+            updateStatus('Goodbye!');
+            setTimeout(() => {
+                handleEndClick({ stopPropagation: () => {} });
+            }, 600);
+            return;
+        }
         updateStatus('Listening...');
         return;
     }
