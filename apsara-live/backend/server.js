@@ -182,8 +182,15 @@ wss.on('connection', (clientWs) => {
                                 sendToolResult(session, fc, result);
                             } else if (fc.name === 'end_conversation') {
                                 console.log('👋 Received end_conversation tool call');
-                                sendToolResult(session, fc, { status: 'ending_conversation' });
-                                clientWs.send(JSON.stringify({ type: 'end_conversation' }));
+                                // Tell the model to finish speaking farewell; client waits for audio before closing
+                                sendToolResult(session, fc, {
+                                    status: 'ok',
+                                    note: 'If you have not spoken a goodbye yet, speak a short warm farewell aloud now. The client will close after your farewell audio finishes.'
+                                });
+                                clientWs.send(JSON.stringify({
+                                    type: 'end_conversation',
+                                    farewell: args.farewell_message || null
+                                }));
                             } else if (fc.name === 'navigate_to_section') {
                                 console.log('🧭 navigate_to_section:', args.section);
                                 const result = await requestClientTool('navigate_to_section', {

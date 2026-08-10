@@ -22,6 +22,9 @@ let isListening = false;
 let audioQueue = [];
 let isPlaying = false;
 let shouldEndAfterTurn = false;
+let pendingGracefulEnd = false;
+let farewellAudioStarted = false;
+let gracefulEndFallbackTimer = null;
 
 // Audio visualization
 let visualizerContext = null;
@@ -199,19 +202,74 @@ function openExternalLink(destination) {
         return { success: false, error: 'unknown_destination', destination };
     }
 
-    // mailto/tel work better via location on some mobile browsers
+    // mailto/tel leave the page in place (open mail/dialer) — safe for Apsara session
     if (url.startsWith('mailto:') || url.startsWith('tel:')) {
         window.location.href = url;
         return { success: true, destination: key, url };
     }
 
-    const opened = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!opened) {
-        // Popup blocked — fallback navigation
-        window.location.assign(url);
-        return { success: true, destination: key, url, fallback: true };
+    // Always open http(s) in a NEW tab so this page (and Apsara) stays alive.
+    // Never fall back to same-tab navigation.
+    let opened = null;
+    try {
+        opened = window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+        console.warn('window.open blocked:', err);
     }
-    return { success: true, destination: key, url };
+
+    if (!opened) {
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        anchor.style.display = 'none';
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        return { success: true, destination: key, url, method: 'anchor_new_tab' };
+    }
+
+    return { success: true, destination: key, url, method: 'window_open' };
+}
+
+function clearGracefulEndTimers() {
+    if (gracefulEndFallbackTimer) {
+        clearTimeout(gracefulEndFallbackTimer);
+        gracefulEndFallbackTimer = null;
+    }
+}
+
+function finalizeGracefulEnd() {
+    if (!pendingGracefulEnd && !shouldEndAfterTurn) return;
+    pendingGracefulEnd = false;
+    shouldEndAfterTurn = false;
+    farewellAudioStarted = false;
+    clearGracefulEndTimers();
+    updateStatus('Goodbye!');
+    setTimeout(() => {
+        handleEndClick({ stopPropagation: () => {} });
+    }, 500);
+}
+
+function armGracefulEnd() {
+    pendingGracefulEnd = true;
+    // If goodbye audio is already playing/queued (speak-then-tool), count it
+    const hasActiveScheduled = !!(playbackContext && scheduledSources.some((item) => item.endTime > playbackContext.currentTime));
+    farewellAudioStarted = isPlaying || audioQueue.length > 0 || hasActiveScheduled;
+    shouldEndAfterTurn = false;
+    updateStatus('Saying goodbye...');
+    clearGracefulEndTimers();
+    // Safety net if model never sends farewell audio
+    gracefulEndFallbackTimer = setTimeout(() => {
+        console.warn('Graceful end fallback — closing after timeout');
+        finalizeGracefulEnd();
+    }, 14000);
+
+    // If farewell is already in progress, close once it drains
+    if (farewellAudioStarted) {
+        shouldEndAfterTurn = true;
+        setTimeout(() => processAudioQueue(), 50);
+    }
 }
 
 function getVisibleSectionContext() {
@@ -439,8 +497,8 @@ function handleBackendMessage(message) {
             break;
 
         case 'end_conversation':
-            console.log('👋 Received end_conversation signal');
-            shouldEndAfterTurn = true;
+            console.log('👋 Received end_conversation signal — waiting for farewell audio');
+            armGracefulEnd();
             break;
 
         case 'error':
@@ -453,12 +511,22 @@ function handleBackendMessage(message) {
 function handleGeminiMessage(data) {
     // Handle audio response
     if (data.data) {
+        if (pendingGracefulEnd) {
+            farewellAudioStarted = true;
+        }
         addAudioToQueue(data.data);
     }
 
     // Handle server content
     if (data.serverContent) {
         if (data.serverContent.interrupted) {
+            // User interrupted goodbye — cancel graceful end and keep listening
+            if (pendingGracefulEnd) {
+                pendingGracefulEnd = false;
+                farewellAudioStarted = false;
+                shouldEndAfterTurn = false;
+                clearGracefulEndTimers();
+            }
             stopAudioPlayback();
             updateStatus('Listening...');
         }
@@ -466,6 +534,11 @@ function handleGeminiMessage(data) {
         if (data.serverContent.turnComplete) {
             miniOrb.classList.remove('speaking');
             miniOrb.classList.add('listening');
+            // Farewell turn finished — close only after queued audio fully plays
+            if (pendingGracefulEnd && farewellAudioStarted) {
+                shouldEndAfterTurn = true;
+                setTimeout(() => processAudioQueue(), 30);
+            }
         }
     }
 
@@ -604,12 +677,22 @@ async function processAudioQueue() {
         isPlaying = false;
         miniOrb.classList.remove('speaking');
         miniOrb.classList.add('listening');
-        if (shouldEndAfterTurn) {
-            shouldEndAfterTurn = false;
+        // Still waiting for farewell speech — do not disconnect yet
+        if (pendingGracefulEnd && !farewellAudioStarted) {
+            updateStatus('Saying goodbye...');
+            return;
+        }
+        // Farewell played — brief settle so late chunks can arrive, then close
+        if (pendingGracefulEnd && farewellAudioStarted) {
             updateStatus('Goodbye!');
-            setTimeout(() => {
-                handleEndClick({ stopPropagation: () => {} });
-            }, 600);
+            clearGracefulEndTimers();
+            gracefulEndFallbackTimer = setTimeout(() => {
+                if (audioQueue.length > 0 || isPlaying) {
+                    processAudioQueue();
+                    return;
+                }
+                finalizeGracefulEnd();
+            }, 1100);
             return;
         }
         updateStatus('Listening...');
@@ -801,6 +884,11 @@ async function handleStartClick() {
 
 function handleEndClick(e) {
     if (e && e.stopPropagation) e.stopPropagation();
+
+    pendingGracefulEnd = false;
+    farewellAudioStarted = false;
+    shouldEndAfterTurn = false;
+    clearGracefulEndTimers();
     
     // Stop everything
     stopMicrophone();

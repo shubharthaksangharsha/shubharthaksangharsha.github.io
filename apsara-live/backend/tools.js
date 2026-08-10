@@ -25,13 +25,13 @@ const tools = [
             },
             {
                 name: 'end_conversation',
-                description: 'End and close the conversation gracefully when the user says goodbye, bye, see you later, ttyl, or indicates they want to wrap up or end the chat.',
+                description: 'Close the conversation after you have ALREADY spoken a warm goodbye out loud. Call this only AFTER your spoken farewell audio, never before speaking. Do not end silently.',
                 parameters: {
                     type: 'object',
                     properties: {
                         farewell_message: {
                             type: 'string',
-                            description: 'Optional warm farewell message to deliver before closing.'
+                            description: 'The farewell you already spoke or will immediately speak aloud (for logging only). Always speak it as voice; do not rely on this field alone.'
                         }
                     }
                 }
@@ -90,7 +90,7 @@ const tools = [
             },
             {
                 name: 'open_external_link',
-                description: 'Open one of Shubharthak\'s approved external links in a new browser tab (GitHub, LinkedIn, resume PDF, email compose, phone dialer, or a featured client website).',
+                description: 'Open one of Shubharthak\'s approved external links in a NEW browser tab so the portfolio page and this voice session stay open (GitHub, LinkedIn, resume PDF, email compose, phone dialer, or a featured client website). Never navigate away from the current page.',
                 parameters: {
                     type: 'object',
                     properties: {
