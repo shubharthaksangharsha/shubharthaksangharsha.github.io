@@ -51,10 +51,288 @@ const miniVisualizer = document.getElementById('miniVisualizer');
 // Mute state
 let isMicMuted = false;
 
+// Portfolio section helpers (shared by Apsara tools)
+const SECTION_ID_MAP = {
+    intro: 'intro',
+    welcome: 'intro',
+    about: 'info',
+    info: 'info',
+    projects: 'projects',
+    freelance: 'freelance',
+    work: 'work',
+    experience: 'work',
+    skills: 'skills',
+    education: 'education',
+    contact: 'contact'
+};
+
+const EXTERNAL_LINKS = {
+    github: 'https://github.com/shubharthaksangharsha',
+    linkedin: 'https://www.linkedin.com/in/shubharthaksangharsha',
+    resume: new URL('/myresume.pdf', window.location.origin).href,
+    email: 'mailto:contact@devshubh.me',
+    phone: 'tel:+61485515430',
+    website: 'https://devshubh.me/',
+    aura: 'https://auraboxedgifts.in/',
+    w13: 'https://w13projects.com/',
+    auzfinance: 'https://auzfinance.com/',
+    baaz: 'https://baazelectrical.github.io/',
+    wyndham: 'https://wyndhamfinancialgroup.com.au/'
+};
+
+const CONTACT_VALUES = {
+    email: 'contact@devshubh.me',
+    phone: '+61 485 515 430',
+    linkedin: 'https://www.linkedin.com/in/shubharthaksangharsha',
+    github: 'https://github.com/shubharthaksangharsha'
+};
+
+let highlightTimer = null;
+
+function resolveSectionId(sectionKey) {
+    if (!sectionKey) return null;
+    return SECTION_ID_MAP[String(sectionKey).toLowerCase().trim()] || null;
+}
+
+function isPortfolioHomePage() {
+    const path = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+    return path === '/' || path.endsWith('/index.html') || path.endsWith('index.html');
+}
+
+function homeUrlForSection(sectionId) {
+    // Keep relative so GitHub Pages project sites and custom domain both work
+    if (isPortfolioHomePage()) {
+        return `#${sectionId}`;
+    }
+    const base = window.location.pathname.includes('/projects')
+        ? window.location.pathname.replace(/projects\.html?$/i, '')
+        : '/';
+    const prefix = base.endsWith('/') ? base : `${base}/`;
+    return `${prefix}index.html#${sectionId}`;
+}
+
+function getMobileNavOffset() {
+    // Fixed top sidebar/nav on tablet/mobile needs extra scroll clearance
+    if (window.matchMedia('(max-width: 980px)').matches) {
+        const sidebar = document.getElementById('sidebar');
+        const navHeight = sidebar ? sidebar.getBoundingClientRect().height : 56;
+        return Math.max(navHeight + 12, 64);
+    }
+    return 16;
+}
+
+function scrollToSectionElement(el) {
+    const offset = getMobileNavOffset();
+    const rect = el.getBoundingClientRect();
+    const absoluteTop = rect.top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+    const target = Math.max(absoluteTop - offset, 0);
+
+    window.scrollTo({
+        top: target,
+        behavior: 'smooth'
+    });
+}
+
+function pulseHighlight(el) {
+    if (!el) return;
+    document.querySelectorAll('.apsara-section-highlight').forEach((node) => {
+        node.classList.remove('apsara-section-highlight');
+    });
+    // Force reflow so re-triggering the same section animates again
+    void el.offsetWidth;
+    el.classList.add('apsara-section-highlight');
+    if (highlightTimer) clearTimeout(highlightTimer);
+    highlightTimer = setTimeout(() => {
+        el.classList.remove('apsara-section-highlight');
+        highlightTimer = null;
+    }, 2200);
+}
+
+function navigateToSection(sectionKey, highlight = true) {
+    const sectionId = resolveSectionId(sectionKey);
+    if (!sectionId) {
+        return { success: false, error: 'unknown_section', section: sectionKey };
+    }
+
+    const el = document.getElementById(sectionId);
+    if (!el) {
+        // On projects.html (or other pages), jump to homepage section
+        window.location.assign(homeUrlForSection(sectionId));
+        return { success: true, redirected: true, section: sectionId };
+    }
+
+    scrollToSectionElement(el);
+    if (highlight) {
+        // Delay highlight slightly so it lands after scroll begins (mobile + laptop)
+        setTimeout(() => pulseHighlight(el), 280);
+    }
+    return { success: true, section: sectionId, highlighted: !!highlight };
+}
+
+function highlightSection(sectionKey) {
+    const sectionId = resolveSectionId(sectionKey);
+    if (!sectionId) {
+        return { success: false, error: 'unknown_section', section: sectionKey };
+    }
+
+    const el = document.getElementById(sectionId);
+    if (!el) {
+        window.location.assign(homeUrlForSection(sectionId));
+        return { success: true, redirected: true, section: sectionId };
+    }
+
+    const rect = el.getBoundingClientRect();
+    const fullyOffscreen = rect.bottom < 80 || rect.top > window.innerHeight - 80;
+    if (fullyOffscreen) {
+        scrollToSectionElement(el);
+        setTimeout(() => pulseHighlight(el), 280);
+    } else {
+        pulseHighlight(el);
+    }
+    return { success: true, section: sectionId };
+}
+
+function openExternalLink(destination) {
+    const key = String(destination || '').toLowerCase().trim();
+    const url = EXTERNAL_LINKS[key];
+    if (!url) {
+        return { success: false, error: 'unknown_destination', destination };
+    }
+
+    // mailto/tel work better via location on some mobile browsers
+    if (url.startsWith('mailto:') || url.startsWith('tel:')) {
+        window.location.href = url;
+        return { success: true, destination: key, url };
+    }
+
+    const opened = window.open(url, '_blank', 'noopener,noreferrer');
+    if (!opened) {
+        // Popup blocked — fallback navigation
+        window.location.assign(url);
+        return { success: true, destination: key, url, fallback: true };
+    }
+    return { success: true, destination: key, url };
+}
+
+function getVisibleSectionContext() {
+    const ids = ['intro', 'info', 'projects', 'freelance', 'work', 'skills', 'education', 'contact'];
+    const viewportMid = window.innerHeight * 0.35;
+    let best = null;
+    let bestScore = Number.POSITIVE_INFINITY;
+
+    ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const score = Math.abs(rect.top - viewportMid);
+        if (score < bestScore) {
+            bestScore = score;
+            best = id;
+        }
+    });
+
+    const sectionKey = best === 'info' ? 'about' : best;
+    return {
+        success: true,
+        page: isPortfolioHomePage() ? 'home' : (window.location.pathname || ''),
+        sectionId: best,
+        section: sectionKey || null,
+        scrollY: Math.round(window.pageYOffset || document.documentElement.scrollTop || 0),
+        viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            isMobileLayout: window.matchMedia('(max-width: 980px)').matches
+        }
+    };
+}
+
+async function copyContactInfo(field) {
+    const key = String(field || '').toLowerCase().trim();
+    const value = CONTACT_VALUES[key];
+    if (!value) {
+        return { success: false, error: 'unknown_field', field };
+    }
+
+    try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(value);
+        } else {
+            const ta = document.createElement('textarea');
+            ta.value = value;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        }
+        updateStatus(`Copied ${key}`);
+        setTimeout(() => {
+            if (isListening) updateStatus(isPlaying ? 'Talk to interrupt' : 'Listening...');
+        }, 1200);
+        return { success: true, field: key, value };
+    } catch (err) {
+        console.error('Clipboard copy failed:', err);
+        return { success: false, error: 'clipboard_failed', field: key };
+    }
+}
+
+async function handleClientToolRequest(message) {
+    const { requestId, tool, args = {} } = message;
+    let result = { success: false, error: 'unknown_tool', tool };
+
+    try {
+        switch (tool) {
+            case 'navigate_to_section':
+                result = navigateToSection(args.section, args.highlight !== false);
+                break;
+            case 'highlight_section':
+                result = highlightSection(args.section);
+                break;
+            case 'open_external_link':
+                result = openExternalLink(args.destination);
+                break;
+            case 'get_page_context':
+                result = getVisibleSectionContext();
+                break;
+            case 'copy_contact_info':
+                result = await copyContactInfo(args.field);
+                break;
+            default:
+                break;
+        }
+    } catch (err) {
+        console.error('Client tool error:', tool, err);
+        result = { success: false, error: err.message || 'client_tool_failed', tool };
+    }
+
+    if (ws && ws.readyState === WebSocket.OPEN && requestId) {
+        ws.send(JSON.stringify({
+            type: 'client_tool_result',
+            requestId,
+            result
+        }));
+    }
+}
+
 // Initialize
 function init() {
     setupVisualizerCanvas();
     setupEventListeners();
+
+    // If we landed with a hash from another page tool redirect, soft-highlight
+    if (window.location.hash) {
+        const id = window.location.hash.slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+            setTimeout(() => {
+                scrollToSectionElement(el);
+                pulseHighlight(el);
+            }, 450);
+        }
+    }
 }
 
 function setupVisualizerCanvas() {
@@ -154,6 +432,10 @@ function handleBackendMessage(message) {
 
         case 'gemini_message':
             handleGeminiMessage(message.data);
+            break;
+
+        case 'client_tool':
+            handleClientToolRequest(message);
             break;
 
         case 'end_conversation':

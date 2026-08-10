@@ -16,7 +16,10 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
     'http://localhost:5500',
     'http://127.0.0.1:5500',
-    'https://shubharthaksangharsha.github.io', // UPDATE THIS!
+    'http://localhost:3000',
+    'https://shubharthaksangharsha.github.io',
+    'https://devshubh.me',
+    'https://www.devshubh.me',
 ];
 
 app.use(cors({
@@ -74,6 +77,40 @@ const wss = new WebSocket.Server({ noServer: true });
 wss.on('connection', (clientWs) => {
     console.log('Client connected');
     let geminiWs = null;
+    const pendingClientTools = new Map();
+
+    const requestClientTool = (tool, args = {}, timeoutMs = 2500) => {
+        return new Promise((resolve) => {
+            if (clientWs.readyState !== WebSocket.OPEN) {
+                resolve({ success: false, error: 'client_disconnected' });
+                return;
+            }
+
+            const requestId = `${tool}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+            const timer = setTimeout(() => {
+                pendingClientTools.delete(requestId);
+                resolve({ success: false, error: 'timeout', tool });
+            }, timeoutMs);
+
+            pendingClientTools.set(requestId, { resolve, timer });
+            clientWs.send(JSON.stringify({
+                type: 'client_tool',
+                requestId,
+                tool,
+                args
+            }));
+        });
+    };
+
+    const sendToolResult = (session, fc, response) => {
+        session.sendToolResponse({
+            functionResponses: [{
+                id: fc.id,
+                name: fc.name,
+                response
+            }]
+        });
+    };
 
     // Connect to Gemini Live API
     const connectToGemini = async () => {
@@ -137,27 +174,48 @@ wss.on('connection', (clientWs) => {
                     // Handle tool calls
                     if (message.toolCall) {
                         for (const fc of message.toolCall.functionCalls) {
-                            if (fc.name === 'send_email_to_shubharthak') {
-                                const { message: emailMessage, senderInfo } = fc.args;
-                                const result = await sendEmailToShubharthak(emailMessage, senderInfo);
+                            const args = fc.args || {};
 
-                                session.sendToolResponse({
-                                    functionResponses: [{
-                                        id: fc.id,
-                                        name: fc.name,
-                                        response: result
-                                    }]
-                                });
+                            if (fc.name === 'send_email_to_shubharthak') {
+                                const { message: emailMessage, senderInfo } = args;
+                                const result = await sendEmailToShubharthak(emailMessage, senderInfo);
+                                sendToolResult(session, fc, result);
                             } else if (fc.name === 'end_conversation') {
                                 console.log('👋 Received end_conversation tool call');
-                                session.sendToolResponse({
-                                    functionResponses: [{
-                                        id: fc.id,
-                                        name: fc.name,
-                                        response: { status: 'ending_conversation' }
-                                    }]
-                                });
+                                sendToolResult(session, fc, { status: 'ending_conversation' });
                                 clientWs.send(JSON.stringify({ type: 'end_conversation' }));
+                            } else if (fc.name === 'navigate_to_section') {
+                                console.log('🧭 navigate_to_section:', args.section);
+                                const result = await requestClientTool('navigate_to_section', {
+                                    section: args.section,
+                                    highlight: args.highlight !== false
+                                });
+                                sendToolResult(session, fc, result);
+                            } else if (fc.name === 'highlight_section') {
+                                console.log('✨ highlight_section:', args.section);
+                                const result = await requestClientTool('highlight_section', {
+                                    section: args.section
+                                });
+                                sendToolResult(session, fc, result);
+                            } else if (fc.name === 'open_external_link') {
+                                console.log('🔗 open_external_link:', args.destination);
+                                const result = await requestClientTool('open_external_link', {
+                                    destination: args.destination
+                                });
+                                sendToolResult(session, fc, result);
+                            } else if (fc.name === 'get_page_context') {
+                                console.log('📍 get_page_context');
+                                const result = await requestClientTool('get_page_context', {});
+                                sendToolResult(session, fc, result);
+                            } else if (fc.name === 'copy_contact_info') {
+                                console.log('📋 copy_contact_info:', args.field);
+                                const result = await requestClientTool('copy_contact_info', {
+                                    field: args.field
+                                });
+                                sendToolResult(session, fc, result);
+                            } else {
+                                console.warn('Unknown tool call:', fc.name);
+                                sendToolResult(session, fc, { success: false, error: 'unknown_tool' });
                             }
                         }
                     }
@@ -193,6 +251,16 @@ wss.on('connection', (clientWs) => {
     clientWs.on('message', (data) => {
         try {
             const message = JSON.parse(data);
+
+            if (message.type === 'client_tool_result' && message.requestId) {
+                const pending = pendingClientTools.get(message.requestId);
+                if (pending) {
+                    clearTimeout(pending.timer);
+                    pendingClientTools.delete(message.requestId);
+                    pending.resolve(message.result || { success: false, error: 'empty_result' });
+                }
+                return;
+            }
 
             if (message.type === 'audio' && geminiWs) {
                 // Forward audio to Gemini
@@ -239,6 +307,11 @@ wss.on('connection', (clientWs) => {
 
     clientWs.on('close', () => {
         console.log('Client disconnected');
+        pendingClientTools.forEach(({ resolve, timer }) => {
+            clearTimeout(timer);
+            resolve({ success: false, error: 'client_disconnected' });
+        });
+        pendingClientTools.clear();
         if (geminiWs) {
             geminiWs.close();
         }

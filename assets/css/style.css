@@ -1,3 +1,28 @@
+/* Ensure in-page jumps clear fixed mobile/tablet nav and look good with Apsara tools */
+#intro,
+#info,
+#projects,
+#freelance,
+#work,
+#skills,
+#education,
+#contact {
+    scroll-margin-top: 1.25rem;
+}
+
+@media screen and (max-width: 980px) {
+    #intro,
+    #info,
+    #projects,
+    #freelance,
+    #work,
+    #skills,
+    #education,
+    #contact {
+        scroll-margin-top: 4.25em;
+    }
+}
+
 /*para*/
 p {
     overflow-wrap: break-word;
