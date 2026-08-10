@@ -116,12 +116,12 @@ p {
     background: #121212;
 }
 
-/* YouTube-style shimmer / soft motion blur while embed loads */
+/* YouTube-style shimmer / soft motion blur while embed loads (sits above iframe until ready) */
 #projects.spotlights > section > .video-container::before {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 3;
     pointer-events: none;
     background:
         linear-gradient(
