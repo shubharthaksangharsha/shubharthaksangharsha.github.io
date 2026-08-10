@@ -183,7 +183,7 @@ p {
     will-change: auto;
 }
 
-/* Theme-colored shimmers (match portfolio palette) */
+/* Theme-colored shimmers — purple / pink only (portfolio palette) */
 #projects.spotlights > section > .video-container.shimmer-purple {
     --shimmer-a: #24183f;
     --shimmer-b: #5e42a6;
@@ -192,36 +192,12 @@ p {
     background: #24183f;
 }
 
-#projects.spotlights > section > .video-container.shimmer-gold {
-    --shimmer-a: #2a2210;
-    --shimmer-b: #c9a227;
-    --shimmer-c: #1f3a1f;
-    --shimmer-glow: rgba(255, 215, 0, 0.4);
-    background: #2a2210;
-}
-
 #projects.spotlights > section > .video-container.shimmer-pink {
     --shimmer-a: #2a1524;
     --shimmer-b: #b74e91;
     --shimmer-c: #5e42a6;
     --shimmer-glow: rgba(244, 114, 182, 0.38);
     background: #2a1524;
-}
-
-#projects.spotlights > section > .video-container.shimmer-teal {
-    --shimmer-a: #102428;
-    --shimmer-b: #2a9d8f;
-    --shimmer-c: #5052b5;
-    --shimmer-glow: rgba(45, 212, 191, 0.35);
-    background: #102428;
-}
-
-#projects.spotlights > section > .video-container.shimmer-violet {
-    --shimmer-a: #1c1438;
-    --shimmer-b: #7a5fd0;
-    --shimmer-c: #b74e91;
-    --shimmer-glow: rgba(167, 139, 250, 0.4);
-    background: #1c1438;
 }
 
 @keyframes videoShimmerSweep {
