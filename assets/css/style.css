@@ -113,6 +113,53 @@ p {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     margin: 1.5em 0.5em 1.5em 1.5em !important;
     box-sizing: border-box !important;
+    background: #121212;
+}
+
+/* YouTube-style shimmer / soft motion blur while embed loads */
+#projects.spotlights > section > .video-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            105deg,
+            rgba(18, 18, 18, 0) 0%,
+            rgba(18, 18, 18, 0) 35%,
+            rgba(255, 255, 255, 0.08) 45%,
+            rgba(255, 255, 255, 0.16) 50%,
+            rgba(255, 255, 255, 0.08) 55%,
+            rgba(18, 18, 18, 0) 65%,
+            rgba(18, 18, 18, 0) 100%
+        ),
+        linear-gradient(90deg, #161616 0%, #222 40%, #1a1a1a 60%, #121212 100%);
+    background-size: 220% 100%, 100% 100%;
+    background-position: 100% 0, 0 0;
+    animation: videoShimmerSweep 1.55s ease-in-out infinite;
+    filter: blur(0.2px);
+    opacity: 1;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#projects.spotlights > section > .video-container.is-loaded::before {
+    opacity: 0;
+    visibility: hidden;
+    animation: none;
+}
+
+@keyframes videoShimmerSweep {
+    0% { background-position: 100% 0, 0 0; }
+    100% { background-position: -120% 0, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #projects.spotlights > section > .video-container::before {
+        animation: none;
+        background: #1a1a1a;
+        filter: none;
+    }
 }
 
 #projects.spotlights > section > .video-container iframe {
@@ -122,6 +169,8 @@ p {
     width: 100% !important;
     height: 100% !important;
     border: 0;
+    z-index: 2;
+    background: transparent;
 }
 
 #projects.spotlights > section > .content {
@@ -149,6 +198,7 @@ p {
         width: 100% !important;
         padding: 2em 1.5em !important;
     }
+}
 
 /* Sidebar & Wrapper Responsive Layout Fix for Desktop & Laptop screens */
 @media screen and (min-width: 981px) {
@@ -340,26 +390,31 @@ elevenlabs-convai {
 #scroll-top.scroll-top-btn,
 .scroll-top-btn {
     position: fixed !important;
-    bottom: 90px !important;
-    right: 25px !important;
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    max-width: 38px !important;
+    bottom: 110px !important;
+    right: 28px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
     padding: 0 !important;
     margin: 0 !important;
-    line-height: 38px !important;
+    line-height: 44px !important;
     border-radius: 50% !important;
-    background: #5e42a6 !important;
+    background: #7a5fd0 !important;
     color: #ffffff !important;
-    border: none !important;
+    border: 2px solid rgba(255, 255, 255, 0.35) !important;
     outline: none !important;
     cursor: pointer !important;
-    display: none;
-    z-index: 99999 !important;
-    transition: background 0.25s ease-in-out, transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out !important;
-    font-size: 14px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    display: flex !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 100001 !important;
+    transition: background 0.25s ease-in-out, transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out, opacity 0.25s ease, visibility 0.25s ease !important;
+    font-size: 16px !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45) !important;
     align-items: center !important;
     justify-content: center !important;
     box-sizing: border-box !important;
@@ -367,6 +422,13 @@ elevenlabs-convai {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-appearance: none !important;
     appearance: none !important;
+}
+
+#scroll-top.scroll-top-btn.is-visible,
+.scroll-top-btn.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 /* Kill Hyperspace theme button::after square overlay on this circular control */
@@ -382,33 +444,33 @@ elevenlabs-convai {
 .scroll-top-btn:focus,
 #scroll-top.scroll-top-btn:active,
 .scroll-top-btn:active {
-    border: none !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
     outline: none !important;
 }
 
 #scroll-top.scroll-top-btn:hover,
 .scroll-top-btn:hover {
     background: #b74e91 !important;
-    transform: translateY(-3px) scale(1.05) !important;
-    box-shadow: 0 6px 18px rgba(183, 78, 145, 0.4) !important;
+    transform: translateY(-3px) scale(1.06) !important;
+    box-shadow: 0 8px 22px rgba(183, 78, 145, 0.5) !important;
 }
 
 #scroll-top.scroll-top-btn:focus-visible,
 .scroll-top-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(94, 66, 166, 0.45), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(183, 78, 145, 0.55), 0 6px 20px rgba(0, 0, 0, 0.45) !important;
 }
 
 @media screen and (max-width: 480px) {
     #scroll-top.scroll-top-btn,
     .scroll-top-btn {
-        bottom: 75px !important;
+        bottom: 78px !important;
         right: 16px !important;
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        max-width: 34px !important;
-        line-height: 34px !important;
-        font-size: 12px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        line-height: 36px !important;
+        font-size: 13px !important;
     }
 }
 

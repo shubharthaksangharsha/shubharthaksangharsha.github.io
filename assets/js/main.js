@@ -192,16 +192,20 @@
 				}
 			});
 
-	// Scroll to top functionality
+	// Scroll to top functionality (window + documentElement for laptop browsers)
 	const scrollBtn = document.querySelector('.scroll-top-btn');
 	if (scrollBtn) {
-		window.addEventListener('scroll', function() {
-			if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-				scrollBtn.style.display = 'flex';
-			} else {
-				scrollBtn.style.display = 'none';
-			}
-		});
+		const updateScrollTopBtn = function() {
+			const y = window.pageYOffset
+				|| document.documentElement.scrollTop
+				|| document.body.scrollTop
+				|| 0;
+			scrollBtn.classList.toggle('is-visible', y > 120);
+		};
+
+		window.addEventListener('scroll', updateScrollTopBtn, { passive: true });
+		window.addEventListener('resize', updateScrollTopBtn, { passive: true });
+		updateScrollTopBtn();
 
 		scrollBtn.addEventListener('click', function() {
 			window.scrollTo({
@@ -210,6 +214,20 @@
 			});
 		});
 	}
+
+	// YouTube embed shimmer: hide placeholder once iframe paints
+	document.querySelectorAll('#projects .video-container iframe').forEach(function(iframe) {
+		var container = iframe.closest('.video-container');
+		if (!container) return;
+
+		var markLoaded = function() {
+			container.classList.add('is-loaded');
+		};
+
+		iframe.addEventListener('load', markLoaded);
+		// Fallback if load is delayed/blocked by privacy settings
+		window.setTimeout(markLoaded, 6000);
+	});
 
 	// Fade in elements on scroll
 	function handleScrollAnimation() {
