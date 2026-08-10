@@ -357,12 +357,33 @@ elevenlabs-convai {
     cursor: pointer !important;
     display: none;
     z-index: 99999 !important;
-    transition: all 0.25s ease-in-out !important;
+    transition: background 0.25s ease-in-out, transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out !important;
     font-size: 14px !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     align-items: center !important;
     justify-content: center !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Kill Hyperspace theme button::after square overlay on this circular control */
+#scroll-top.scroll-top-btn::after,
+.scroll-top-btn::after {
+    display: none !important;
+    content: none !important;
+}
+
+#scroll-top.scroll-top-btn:hover,
+.scroll-top-btn:hover,
+#scroll-top.scroll-top-btn:focus,
+.scroll-top-btn:focus,
+#scroll-top.scroll-top-btn:active,
+.scroll-top-btn:active {
+    border: none !important;
+    outline: none !important;
 }
 
 #scroll-top.scroll-top-btn:hover,
@@ -370,6 +391,11 @@ elevenlabs-convai {
     background: #b74e91 !important;
     transform: translateY(-3px) scale(1.05) !important;
     box-shadow: 0 6px 18px rgba(183, 78, 145, 0.4) !important;
+}
+
+#scroll-top.scroll-top-btn:focus-visible,
+.scroll-top-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(94, 66, 166, 0.45), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
 }
 
 @media screen and (max-width: 480px) {
