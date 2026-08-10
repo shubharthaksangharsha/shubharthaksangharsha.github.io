@@ -215,18 +215,37 @@
 		});
 	}
 
-	// YouTube embed shimmer: hide placeholder once iframe paints
+	// YouTube embed shimmer: animate only near viewport, hide once iframe paints
 	document.querySelectorAll('#projects .video-container iframe').forEach(function(iframe) {
 		var container = iframe.closest('.video-container');
 		if (!container) return;
 
+		var marked = false;
 		var markLoaded = function() {
+			if (marked) return;
+			marked = true;
 			container.classList.add('is-loaded');
+			container.classList.remove('is-shimmering');
 		};
 
 		iframe.addEventListener('load', markLoaded);
-		// Fallback if load is delayed/blocked by privacy settings
-		window.setTimeout(markLoaded, 6000);
+
+		if ('IntersectionObserver' in window) {
+			var io = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						container.classList.add('is-shimmering');
+						// Soft fallback once user has actually scrolled near the video
+						window.setTimeout(markLoaded, 4500);
+						io.unobserve(container);
+					}
+				});
+			}, { rootMargin: '200px 0px', threshold: 0.01 });
+			io.observe(container);
+		} else {
+			container.classList.add('is-shimmering');
+			window.setTimeout(markLoaded, 4500);
+		}
 	});
 
 	// Fade in elements on scroll

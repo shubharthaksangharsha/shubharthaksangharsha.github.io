@@ -138,10 +138,10 @@ p {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     margin: 1.5em 0.5em 1.5em 1.5em !important;
     box-sizing: border-box !important;
-    background: #121212;
+    background: #1a1530;
 }
 
-/* YouTube-style shimmer / soft motion blur while embed loads (sits above iframe until ready) */
+/* Faster YouTube-style shimmer — paused until near viewport (.is-shimmering) */
 #projects.spotlights > section > .video-container::before {
     content: '';
     position: absolute;
@@ -151,39 +151,89 @@ p {
     background:
         linear-gradient(
             105deg,
-            rgba(18, 18, 18, 0) 0%,
-            rgba(18, 18, 18, 0) 35%,
-            rgba(255, 255, 255, 0.08) 45%,
-            rgba(255, 255, 255, 0.16) 50%,
-            rgba(255, 255, 255, 0.08) 55%,
-            rgba(18, 18, 18, 0) 65%,
-            rgba(18, 18, 18, 0) 100%
+            transparent 0%,
+            transparent 38%,
+            var(--shimmer-glow, rgba(255, 255, 255, 0.14)) 50%,
+            transparent 62%,
+            transparent 100%
         ),
-        linear-gradient(90deg, #161616 0%, #222 40%, #1a1a1a 60%, #121212 100%);
-    background-size: 220% 100%, 100% 100%;
+        linear-gradient(
+            120deg,
+            var(--shimmer-a, #1a1530) 0%,
+            var(--shimmer-b, #2d2460) 45%,
+            var(--shimmer-c, #1a1530) 100%
+        );
+    background-size: 200% 100%, 100% 100%;
     background-position: 100% 0, 0 0;
-    animation: videoShimmerSweep 1.55s ease-in-out infinite;
-    filter: blur(0.2px);
+    animation: videoShimmerSweep 0.85s linear infinite;
+    animation-play-state: paused;
     opacity: 1;
-    transition: opacity 0.45s ease, visibility 0.45s ease;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+    will-change: background-position;
+}
+
+#projects.spotlights > section > .video-container.is-shimmering::before {
+    animation-play-state: running;
 }
 
 #projects.spotlights > section > .video-container.is-loaded::before {
     opacity: 0;
     visibility: hidden;
     animation: none;
+    will-change: auto;
+}
+
+/* Theme-colored shimmers (match portfolio palette) */
+#projects.spotlights > section > .video-container.shimmer-purple {
+    --shimmer-a: #24183f;
+    --shimmer-b: #5e42a6;
+    --shimmer-c: #312450;
+    --shimmer-glow: rgba(167, 139, 250, 0.35);
+    background: #24183f;
+}
+
+#projects.spotlights > section > .video-container.shimmer-gold {
+    --shimmer-a: #2a2210;
+    --shimmer-b: #c9a227;
+    --shimmer-c: #1f3a1f;
+    --shimmer-glow: rgba(255, 215, 0, 0.4);
+    background: #2a2210;
+}
+
+#projects.spotlights > section > .video-container.shimmer-pink {
+    --shimmer-a: #2a1524;
+    --shimmer-b: #b74e91;
+    --shimmer-c: #5e42a6;
+    --shimmer-glow: rgba(244, 114, 182, 0.38);
+    background: #2a1524;
+}
+
+#projects.spotlights > section > .video-container.shimmer-teal {
+    --shimmer-a: #102428;
+    --shimmer-b: #2a9d8f;
+    --shimmer-c: #5052b5;
+    --shimmer-glow: rgba(45, 212, 191, 0.35);
+    background: #102428;
+}
+
+#projects.spotlights > section > .video-container.shimmer-violet {
+    --shimmer-a: #1c1438;
+    --shimmer-b: #7a5fd0;
+    --shimmer-c: #b74e91;
+    --shimmer-glow: rgba(167, 139, 250, 0.4);
+    background: #1c1438;
 }
 
 @keyframes videoShimmerSweep {
     0% { background-position: 100% 0, 0 0; }
-    100% { background-position: -120% 0, 0 0; }
+    100% { background-position: -100% 0, 0 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     #projects.spotlights > section > .video-container::before {
         animation: none;
-        background: #1a1a1a;
-        filter: none;
+        background: var(--shimmer-a, #1a1530);
+        will-change: auto;
     }
 }
 
