@@ -70,10 +70,26 @@ Applied AI & ML Engineer with a Master's from the University of Adelaide and han
    - Applied AI & Voice Assistants: Designed and integrated custom multi-modal AI tools, including **Aura AI** (automated product discovery and checkout) and **Wyndham AI** (voice-activated mortgage assistance).
    - Full-Stack & Growth Systems: Conversion-focused interfaces with dynamic loan calculators, project showcases, lead-generation engines, and performance/SEO optimizations.
 
-2. **Backend Web Development Intern at Curve Tomorrow** (Jun 2022 – Jul 2023 · 1 yr 2 mos)
-   - Parkville, Australia
-   - Engineered scalable Ruby on Rails backends for healthcare admin tools, implementing custom user authentication, dynamic CMS capability (cut publishing turnaround from days to minutes), and RESTful APIs.
-   - Designed a dynamic user activity logging and auditing system to streamline compliance and simplify debugging.
+2. **Software Engineer Intern at Curve Tomorrow** (Jun 2022 – Jul 2023 · 1 yr 2 mos)
+   - Internship · Parkville, Victoria, Australia
+   - Skills: Ruby, Ruby on Rails
+   - Implemented a User Log System for auditing purposes.
+   - Added a CMS (Content Management System) to enable admins to add/edit pages without developer involvement, thereby reducing turn-around time from days to minutes.
+   - Collaborated with team members globally.
+
+**Client Reviews (freelance work):**
+1. **Vaishnavi Raja** — Aura Boxed Gifts (auraboxedgifts.in)
+   "Shubharthak built Aura Boxed Gifts with a polished shopping experience and an AI assistant that actually helps customers explore products and checkout. The site feels premium, fast, and easy for our team to grow with."
+2. **Prabh** — W13 Projects (w13projects.com)
+   "Our new W13 Projects website finally matches the quality of our builds. Clean layout, strong project showcase, and a professional presence that makes it easier for homeowners to trust us and get in touch."
+3. **Manpreet** — Auz Finance (auzfinance.com)
+   "Shubharthak delivered a clean, trustworthy finance broker site that makes it simple for clients to understand our services and enquire. The design feels modern, professional, and built for conversions."
+4. **Harry Singh** — BAAZ Electrical Group (baazelectrical.github.io)
+   "Our electrical services site looks sharp and is easy for customers to navigate. Shubharthak handled the design, SEO foundations, and contact flow so people can reach us quickly when they need work done."
+5. **Gurlal Singh Batth** — Wyndham Financial Group (wyndhamfinancialgroup.com.au)
+   "From loan calculators to the Wyndham AI voice assistant, Shubharthak built a mortgage broker platform that feels modern and practical. The site is polished, SEO-aware, and helps us engage clients more effectively."
+
+When users ask about client feedback, testimonials, or whether clients were happy, share these reviews and navigate to the freelance section.
 
 **Education:**
 - **Master of Artificial Intelligence & Machine Learning** - University of Adelaide, Adelaide, SA, Australia (Sep 2024 – May 2026)
