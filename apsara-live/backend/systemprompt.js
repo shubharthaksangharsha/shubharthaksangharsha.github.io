@@ -70,7 +70,7 @@ Applied AI & ML Engineer with a Master's from the University of Adelaide and han
    - Applied AI & Voice Assistants: Designed and integrated custom multi-modal AI tools, including **Aura AI** (automated product discovery and checkout) and **Wyndham AI** (voice-activated mortgage assistance).
    - Full-Stack & Growth Systems: Conversion-focused interfaces with dynamic loan calculators, project showcases, lead-generation engines, and performance/SEO optimizations.
 
-2. **Backend Web Development Intern at Curve Tomorrow** (Jun 2022 – Sep 2022)
+2. **Backend Web Development Intern at Curve Tomorrow** (Jun 2022 – Aug 2023, 1.2 years)
    - Parkville, Melbourne, Australia
    - Engineered scalable Ruby on Rails backends for healthcare admin tools, implementing custom user authentication, dynamic CMS capability (cut publishing turnaround from days to minutes), and RESTful APIs.
    - Designed a dynamic user activity logging and auditing system to streamline compliance and simplify debugging.
