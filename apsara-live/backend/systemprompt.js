@@ -72,10 +72,15 @@ Applied AI & ML Engineer with a Master's from the University of Adelaide and han
 
 2. **Software Engineer Intern at Curve Tomorrow** (Jun 2022 – Jul 2023 · 1 yr 2 mos)
    - Internship · Parkville, Victoria, Australia
-   - Skills: Ruby, Ruby on Rails
-   - Implemented a User Log System for auditing purposes.
+   - Skills / stack: Ruby, Ruby on Rails, REST APIs, PostgreSQL/MySQL, MVC architecture, Agile collaboration
+   - Implemented a User Log System for auditing purposes, capturing admin and user activity to support compliance reviews and faster backend issue tracing.
    - Added a CMS (Content Management System) to enable admins to add/edit pages without developer involvement, thereby reducing turn-around time from days to minutes.
-   - Collaborated with team members globally.
+   - Collaborated with team members globally across distributed Agile sprints, stand-ups, and code reviews.
+   - Built and maintained scalable backend features in Ruby on Rails for internal tools and healthcare admin-facing web applications.
+   - Designed and shipped RESTful APIs, relational database models, and server-side logic following Rails MVC best practices.
+   - Implemented user authentication, authorization flows, CRUD functionality, and content/blog-style publishing workflows for admin users.
+   - Optimized backend queries and application logic to improve reliability of auditing, CMS publishing, and day-to-day admin operations.
+   - Worked across healthcare-domain requirements with attention to data integrity, maintainable Rails architecture, and clear handoff for non-technical stakeholders.
 
 **Client Reviews (freelance work):**
 1. **Vaishnavi Raja** — Aura Boxed Gifts (auraboxedgifts.in)
