@@ -72,15 +72,14 @@ Applied AI & ML Engineer with a Master's from the University of Adelaide and han
 
 2. **Software Engineer Intern at Curve Tomorrow** (Jun 2022 – Jul 2023 · 1 yr 2 mos)
    - Internship · Parkville, Victoria, Australia
-   - Skills / stack: Ruby, Ruby on Rails, PostgreSQL, REST APIs, MVC, Agile
-   - Built and maintained scalable backend features in Ruby on Rails for internal tools and healthcare-focused web applications.
-   - Developed a user activity logging system to improve auditing, monitoring, and backend issue tracing.
-   - Designed and implemented a dynamic Content Management System (CMS) enabling non-technical administrators to create and manage web content independently.
-   - Developed RESTful APIs, relational database models, and CRUD workflows following Rails MVC architecture and backend best practices.
-   - Implemented secure user authentication and authorization to support admin-facing operations.
+   - Built and maintained scalable backend features in **Ruby on Rails** for internal tools and healthcare-focused web applications.
+   - Developed a **user activity logging system** to improve auditing, monitoring, and backend issue tracing.
+   - Designed and implemented a dynamic **Content Management System (CMS)** that enabled non-technical administrators to create and manage web content independently.
+   - Developed **RESTful APIs**, relational database models, and CRUD workflows following **Rails MVC architecture** and backend best practices.
+   - Implemented secure **user authentication and authorization** to support admin-facing operations.
    - Optimized server-side logic and database queries to improve backend reliability and application performance.
-   - Collaborated with distributed teams in Agile sprints, participating in stand-ups, code reviews, and iterative development.
-   - Worked with Ruby, Ruby on Rails, and PostgreSQL to build maintainable and scalable web applications.
+   - Collaborated with distributed teams in **Agile sprints**, participating in stand-ups, code reviews, and iterative development.
+   - Worked with **Ruby, Ruby on Rails, and PostgreSQL** to build maintainable and scalable web applications.
 
 **Client Reviews (freelance work):**
 1. **Vaishnavi Raja** — Aura Boxed Gifts (auraboxedgifts.in)
