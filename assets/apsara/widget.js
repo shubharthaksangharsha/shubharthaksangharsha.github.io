@@ -2,7 +2,7 @@
  * Apsara Widget - Compact Voice Assistant
  * Client-side widget connected to Apsara Live backend (wss://apsara-devshubh.devshubh.me)
  * Knowledge base context:
- * - Master of AI & ML, University of Adelaide (GPA: 6.375 / 7.00)
+ * - Master of AI & ML, University of Adelaide (GPA: 6.5 / 7.0)
  * - Capstone Research: Action-Conditioned RSSM World Models & Hybrid CEM Planner for Unitree Go2 Quadruped Sim-to-Real Navigation
  * - Client Work & Multimodal AI: Aura AI (Aura Boxed Gifts), Wyndham AI (Wyndham Financial Group)
  */

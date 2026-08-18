@@ -97,7 +97,7 @@ When users ask about client feedback, testimonials, or whether clients were happ
 
 **Education:**
 - **Master of Artificial Intelligence & Machine Learning** - University of Adelaide, Adelaide, SA, Australia (Sep 2024 – May 2026)
-  GPA: 6.375 / 7.00
+  GPA: 6.5 / 7.0
   Courses: Deep Learning Fundamentals, Mining Big Data, ML & AI, Applied NLP, Computer Vision
 - **B.E. in Computer Science & Engineering (AI/ML)** - Chandigarh University, Punjab, India (Apr 2020 – May 2024)
   CGPA: 8.39 / 10.00
