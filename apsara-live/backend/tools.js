@@ -90,7 +90,7 @@ const tools = [
             },
             {
                 name: 'open_external_link',
-                description: 'Open one of Shubharthak\'s approved external links in a NEW browser tab so the portfolio page and this voice session stay open (GitHub, LinkedIn, resume PDF, email compose, phone dialer, or a featured client website). Never navigate away from the current page.',
+                description: 'Open one of Shubharthak\'s approved external links in a NEW browser tab so the portfolio page and this voice session stay open (GitHub, LinkedIn, resume PDF, email compose, or a featured client website). Never navigate away from the current page.',
                 parameters: {
                     type: 'object',
                     properties: {
@@ -102,7 +102,6 @@ const tools = [
                                 'linkedin',
                                 'resume',
                                 'email',
-                                'phone',
                                 'website',
                                 'aura',
                                 'w13',
@@ -117,7 +116,7 @@ const tools = [
             },
             {
                 name: 'get_page_context',
-                description: 'Read which portfolio section is currently most visible in the visitor\'s browser viewport. Use this when you need better follow-up awareness (e.g. user says \"what about this section?\" or \"tell me more about what I\'m looking at\").',
+                description: 'Read which portfolio section is currently most visible in the visitor\'s browser viewport. Use this when you need better follow-up awareness (e.g. user says "what about this section?" or "tell me more about what I\'m looking at").',
                 parameters: {
                     type: 'object',
                     properties: {}
@@ -125,14 +124,14 @@ const tools = [
             },
             {
                 name: 'copy_contact_info',
-                description: 'Copy Shubharthak\'s contact details to the visitor\'s clipboard for convenience (email, phone, LinkedIn URL, or GitHub URL).',
+                description: 'Copy Shubharthak\'s contact details to the visitor\'s clipboard for convenience (email, LinkedIn URL, or GitHub URL).',
                 parameters: {
                     type: 'object',
                     properties: {
                         field: {
                             type: 'string',
                             description: 'Which contact field to copy',
-                            enum: ['email', 'phone', 'linkedin', 'github']
+                            enum: ['email', 'linkedin', 'github']
                         }
                     },
                     required: ['field']

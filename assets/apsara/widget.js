@@ -74,7 +74,6 @@ const EXTERNAL_LINKS = {
     linkedin: 'https://www.linkedin.com/in/shubharthaksangharsha',
     resume: new URL('/myresume.pdf', window.location.origin).href,
     email: 'mailto:contact@devshubh.me',
-    phone: 'tel:+61485515430',
     website: 'https://devshubh.me/',
     aura: 'https://auraboxedgifts.in/',
     w13: 'https://w13projects.com/',
@@ -85,7 +84,6 @@ const EXTERNAL_LINKS = {
 
 const CONTACT_VALUES = {
     email: 'contact@devshubh.me',
-    phone: '+61 485 515 430',
     linkedin: 'https://www.linkedin.com/in/shubharthaksangharsha',
     github: 'https://github.com/shubharthaksangharsha'
 };
