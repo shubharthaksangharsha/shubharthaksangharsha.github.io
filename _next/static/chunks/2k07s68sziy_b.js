@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,52961,t=>{"use strict";var o=t.i(4802),i=t.i(35932);t.s(["FloatingChatbot",()=>o.FloatingChatbot,"PixelRobot",()=>i.PixelRobot])}]);
