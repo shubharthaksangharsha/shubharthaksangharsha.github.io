@@ -1,9 +1,9 @@
 :HL["/_next/static/chunks/1ca57xmicnftb.css","style"]
-:HL["/_next/static/chunks/1d8wvu6n9vqkc.css","style"]
+:HL["/_next/static/chunks/1v5d30p8axo2l.css","style"]
 :HL["/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/1bc7fc94203521e3-s.p.0gm5xa07u9y0b.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/216579b50e548914-s.p.1ay1jy0-bfc4a.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/3df2de83712245dd-s.p.0w014qgprzbql.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/cd72e39fe5f8e190-s.p.0e2034rwz-vfe.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/chunks/3bgxyzqwgg0-j.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"en","param":null,"prefetchHints":4160,"slots":{"children":{"name":"blog","param":null,"prefetchHints":4192,"slots":{"children":{"name":"slug","param":{"type":"d","key":"why-frontier-coding-models-still-outperform-open-source-in-iterative-development","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"U53F06tzi9p6JcD_TFvJq"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"en","param":null,"prefetchHints":4160,"slots":{"children":{"name":"blog","param":null,"prefetchHints":4192,"slots":{"children":{"name":"slug","param":{"type":"d","key":"why-frontier-coding-models-still-outperform-open-source-in-iterative-development","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"TCXMCz50zhHP5foFf8yIu"}
