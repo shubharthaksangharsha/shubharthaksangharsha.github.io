@@ -3,3 +3,5 @@ Allow: /
 
 User-agent: Googlebot-Favicon
 Allow: /
+
+Sitemap: https://devshubh.me/sitemap.xml
