@@ -1,5 +1,5 @@
-:HL["/_next/static/chunks/1ca57xmicnftb.css","style"]
-:HL["/_next/static/chunks/1ffwvnuq_p-5p.css","style"]
+:HL["/_next/static/chunks/11mr7gvu5fsog.css","style"]
+:HL["/_next/static/chunks/3lbe2337kg1ho.css","style"]
 :HL["/_next/static/chunks/3bgxyzqwgg0-j.css","style"]
 :HL["/images/shubh_portrait.webp","image",{"type":"image/webp","fetchPriority":"high"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"10Pac3jFB-fMdVAGXpj7w"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"H2YtdEwwfkQ9YO3HxXZ5F"}
