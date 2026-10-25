@@ -2,4 +2,4 @@
 :HL["/_next/static/chunks/43hr6ckp-aswv.css","style"]
 :HL["/_next/static/chunks/3bgxyzqwgg0-j.css","style"]
 :HL["/images/shubh_portrait.webp","image",{"type":"image/webp","fetchPriority":"high"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"pqtftDApdeQJTqOuGYwWk"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"y0AT_JNPTpZMCL75qfAYU"}
